@@ -6,7 +6,7 @@ module.exports.queryByIngredient = async(req, res, next) => {
         let request = require("request");
 
         if(true) {
-            ingredient = "cheese"
+            ingredient = req.body.ingredient;
             let options = {
                 url: `https://api.spoonacular.com/recipes/search?apiKey=${spoonacularAPIKey}&query=${ingredient}&number=${maxNumberOfResults}`
             }
