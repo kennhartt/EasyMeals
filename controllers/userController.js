@@ -122,3 +122,18 @@ module.exports.changePassword = async(req, res, next) => {
         return next(err);
     }
 }
+
+module.exports.addRecipe = async (req, res, next) => {
+    if (!authentication.authenticate(req, res))
+        return;
+
+    try{
+        let response = await req.app.db.collection('Users').updateOne(
+            {username: req.body.username},
+            {$push: {recipeList: req.body.recipeId}});
+
+        res.send("Recipe added to favorites");
+    } catch {
+        return next(err);
+    }
+}

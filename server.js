@@ -26,7 +26,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // User Controllers
 app.route('/api/user/createUser').post(userController.createUser); // Create user endpoint
 app.route('/api/user/login').post(userController.userLogin); // User login endpoint 
-app.route('/api/user/changePassword').post(userController.changePassword); // Change password endpoint
+app.route('/api/user/changePassword').post(userController.changePassword); // Change password
+app.route('/api/user/addRecipe').post(userController.addRecipe); // Add recipe to user list
 
 // Recipe Query Controllers
 app.route('/api/query/byNatural').post(queryController.queryByNatural); // Finds recipes by natural text string
@@ -34,8 +35,6 @@ app.route('/api/query/byIngredient').post(queryController.queryByIngredient); //
 app.route('/api/query/getRecipeById').post(queryController.getRecipeById); // Finds recipe by recipe id
 app.route('/api/query/getUserRecipes').post(queryController.getUserRecipes); // Returns recipes saved by users
 app.route('/api/query/byIngredient').post(queryController.queryByIngredient); // Finds recipes by ingredient
-
-
 
 app.listen(8000);
 
