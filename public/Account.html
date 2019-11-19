@@ -1,0 +1,216 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+		<meta name="generator" content="Jekyll v3.8.5">
+		<title>Account</title>
+
+		<!-- Bootstrap core CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+		<style>
+			.bd-placeholder-img {
+				font-size: 1.125rem;
+				text-anchor: middle;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+
+			@media (min-width: 768px) {
+				.bd-placeholder-img-lg {
+					font-size: 3.5rem;
+				}
+			}
+			
+			.sidenav {
+				height: 120%;
+				width: 0;
+				position: fixed;
+				z-index: 1;
+				top: 0;
+				right: 0;
+				background-color: #ffffff;
+				overflow-x: hidden;
+				transition: 0.5s;
+				padding-top: 80px;
+			}
+
+			.sidenav a {
+				padding: 8px 8px 8px 32px;
+				text-decoration: none;
+				font-size: 25px;
+				color: #818181;
+				display: block;
+				transition: 0.3s;
+			}
+
+			.sidenav a:hover {
+				color: #f1f1f1;
+			}
+
+			.sidenav .closebtn {
+				position: absolute;
+				top: 0;
+				right: 25px;
+				font-size: 30px;
+				margin-left: 50px;
+				padding-top: 60px;
+			}
+		</style>
+		<!-- Custom styles for this template -->
+		<link href="jumbotron.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<a class="navbar-brand ml-3" href="#">&#10086; EasyMeals</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav ml-auto mr-3 w-100 justify-content-end">
+					<li class="nav-item">
+						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="Account.html">Account</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" onclick="openNav()">Sign in</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" onclick="openNav()">Sign up</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe &#9753;</a>
+					</li>
+				</ul>
+    
+			</div>
+		</nav>
+
+		<main role="main">
+			<!-- Main jumbotron for a primary marketing message or call to action -->
+			<div class="jumbotron" style="margin-top: 30px;margin-left: 200px;background-color: #ffffff">
+				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom" style="width: 1000px">
+            		<h1 class="h2">Change Password</h1>
+            
+          		</div>
+	         	<div class="col-md-8 order-md-1">      
+			      <form class="needs-validation" novalidate="" action="">
+			        <div class="row">          
+			        	<div class="mb-3">
+			        		<label for="curPassword">Current Password</label>
+			         	 	<input type="password" class="form-control" id="curPassword"  value="" required="">
+			         	 	<div class="invalid-feedback">
+			            		Please enter current password.
+			          		</div>
+			        	</div>
+			        </div>  
+			        
+			        <div class="row">
+						<div class="mb-3">
+			          		<label for="conPassword">Confirm Password</label>
+			          		<input type="password" class="form-control" id="conPassword" value="" required="">
+			          		<div class="invalid-feedback">
+			            		Please re-enter current password.
+			          		</div>
+			        	</div>
+			        </div>
+			        
+			        <div class="row">
+			        	<div class="mb-3">
+			          		<label for="newPassword">New Password</label>
+			          		<input type="password" class="form-control" id="newPassword" value="" required="">
+			          		<div class="invalid-feedback">
+			            		Please enter a new password.
+			          		</div>
+			        	</div>
+			        </div>
+			        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-top" style="width: 980px">
+            			<button class="btn-group-lg" style="width: 150px;margin-top: 20px" type="submit" >Change Password</button>
+          			</div>
+			      </form>
+			    </div>
+			</div>
+		</main>
+		
+		<!-- sideBar Registration/Login -->
+		<div id="mySidenav" class="sidenav text-center border-left">			
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<div class="py-5 text-center">			
+				<h4 class="font-weight-bold">Welcome to EasyMeals</h4>
+				<h5>Fill out the form to get started.</h5>
+			</div>
+			<div class="col-md-9 order-md-1" style="margin: auto">      
+				<form class="needs-validation" novalidate="" action="./Account_Reservations.html">        
+					<div class="mb-3">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required="">
+						<div class="invalid-feedback">
+							Please enter a valid email address.
+						</div>
+					</div>
+               
+					<div class="mb-3">
+						<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
+						<input type="password" class="form-control" id="password" placeholder="Password" value="" required="">
+						<div class="invalid-feedback">
+							Please enter a valid password.
+						</div>
+					</div>
+        
+					<div class="mb-3">
+						<label for="conpassword">Confirm Password</label>
+						<input type="password" class="form-control" id="conpassword" placeholder="Confirm Password" value="" required="">
+						<div class="invalid-feedback">
+							Please re-enter your password.
+						</div>
+					</div>
+              
+					<hr class="mb-4">
+					<button class="btn btn-primary btn-lg btn-default" type="submit" >Get Started</button>
+				</form>
+			</div>
+			
+			<div style="padding-top: 200px" ></div>
+			
+			<div style="height: 200px;padding-top: 50px;background:url('Images/footer.jpg');background-size: contain;">
+				<h6>© 2019 EasyMeals</h6>
+			</div>	
+			
+		</div>
+
+		<footer class="container" style="margin-right: 520px">
+			<p>&copy; EasyMeals 2019</p>
+		</footer>
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+		<script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+		<script src="./CSS/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+		<script src="./CSS/bootstrap.bundle.min.js.download" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+		<script src="./CSS/form-validation.js.download"></script>
+		
+		<script>
+			function openNav() {
+				document.getElementById("mySidenav").style.width = "500px";
+			}
+
+			function closeNav() {
+				document.getElementById("mySidenav").style.width = "0";
+			}
+		</script>
+	</body>
+    
+</html>
