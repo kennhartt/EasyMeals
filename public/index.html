@@ -12,6 +12,7 @@
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="login.js"></script>
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -85,10 +86,10 @@
 						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" onclick="openNav()">Sign in</a>
+						<a class="nav-link" onclick="openNavLog()">Sign in</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" onclick="openNav()">Sign up</a>
+						<a class="nav-link" onclick="openNavReg()">Sign up</a>
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe &#9753;</a>
@@ -137,7 +138,7 @@
 
 		</main>
 		
-		<!-- sideBar Registration/Login -->
+		<!-- sideBar Registration -->
 		<div id="mySidenav" class="sidenav text-center border-left">			
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<div class="py-5 text-center">			
@@ -145,7 +146,6 @@
 				<h5>Fill out the form to get started.</h5>
 			</div>
 			<div class="col-md-9 order-md-1" style="margin: auto">      
-				<form class="needs-validation" novalidate="" action="./Account_Reservations.html">        
 					<div class="mb-3">
 						<label for="email">Email</label>
 						<input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required="">
@@ -172,7 +172,41 @@
               
 					<hr class="mb-4">
 					<button class="btn btn-primary btn-lg btn-default" type="submit" >Get Started</button>
-				</form>
+			</div>
+			
+			<div style="padding-top: 200px" ></div>
+			
+			<div style="height: 200px;padding-top: 50px;background:url('Images/footer.jpg');background-size: contain;">
+				<h6>© 2019 EasyMeals</h6>
+			</div>	
+			
+		</div>
+		
+		<!-- sideBar Login -->
+		<div id="mySidenavLogin" class="sidenav text-center border-left">			
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<div class="py-5 text-center">			
+				<h4 class="font-weight-bold">Welcome to EasyMeals</h4>
+			</div>
+			<div class="col-md-9 order-md-1" style="margin: auto">      
+					<div class="mb-3">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" id="emailLogin" placeholder="you@example.com" value="" required="">
+						<div class="invalid-feedback">
+							Please enter a valid email address.
+						</div>
+					</div>
+               
+					<div class="mb-3">
+						<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
+						<input type="password" class="form-control" id="passwordLogin" placeholder="Password" value="" required="">
+						<div class="invalid-feedback">
+							Please enter a valid password.
+						</div>
+					</div>
+					
+					<hr class="mb-4">
+					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())" >Login</button>
 			</div>
 			
 			<div style="padding-top: 200px" ></div>
@@ -192,14 +226,19 @@
 		
 		<script>
 		
-		function openNav() {
+		function openNavReg() {
 			document.getElementById("mySidenav").style.width = "500px";
+		}
+		
+		function openNavLog() {
+			document.getElementById("mySidenavLogin").style.width = "500px";
 		}
 
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("mySidenavLogin").style.width = "0px";
 		}
-		
+		/*
 		$(function(){
 
   			// jQuery methods go here...
@@ -235,7 +274,7 @@
 					titleCard.innerHTML = "Recipes";
 					display.innerHTML+=text;
 				}})
-			}
+			}*/
 			
 			function clearDisplay(){
 				var display = document.getElementById("results");
@@ -249,8 +288,10 @@
 			$("#searchBtn").click(function(){
 				queryByIngredient($("#searchData").val());
 			})
-			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
-		});
+			//searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
+		//});
+		
+
 		</script>
 	</body>
     
