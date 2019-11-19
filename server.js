@@ -33,6 +33,8 @@ app.route('/api/query/byNatural').post(queryController.queryByNatural); // Finds
 app.route('/api/query/byIngredient').post(queryController.queryByIngredient); // Finds recipes by ingredients
 app.route('/api/query/getRecipeById').post(queryController.getRecipeById); // Finds recipe by recipe id
 app.route('/api/query/getUserRecipes').post(queryController.getUserRecipes); // Returns recipes saved by users
+app.route('/api/query/byIngredient').post(queryController.queryByIngredient); // Finds recipes by ingredient
+
 
 
 app.listen(8000);
