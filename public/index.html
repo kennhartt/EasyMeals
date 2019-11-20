@@ -206,26 +206,29 @@
 				$("#accountItem").hide();
 				$("#logOutItem").hide();
 			}
-  			// jQuery methods go here...
+  			// ajax function
 			function queryByIngredient(naturalString){
+				//clear div tag everytime user search for a recipe
 				clearDisplay();
 				var display = document.getElementById("results");
 				var titleCard = document.getElementById("titleCard");
 				var count = 1;
+				//ajax call to server
 				$.ajax({
 					url: 'http://localhost:8000/api/query/byNatural',
 					type: 'POST',
 					contentType: 'application/json',
+					// parse data, send required parameters in JSON format
 					data: JSON.stringify({naturalString}),
 					success: function(res){
-						var text = "<div class='row'>";
-						
+						var text = "<div class='row'>"; //content data
+						//loop through returned data and assign it to text
 						for(var i = 0; i < res.results.length;i++){
 							var title = res.results[i].title;
 							if(title.length>25){
 								title = title.substring(0,25) + "...";
 							}
-							
+							//close the div tag to produce 3x3 table result
 							if(i%3 == 0){
 								text += "</div>";
 								if(i!=res.results.length-1){
@@ -234,6 +237,7 @@
 							}
 							text += "<div class='col-md-4 rounded'><h1 class='h5'>"+title+"</h1><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+res.results[i].id+"-556x370.jpg' style='height: 250px'/></p><p><button name='viewRecipe' class='btn btn-secondary' role='button' value="+res.results[i].id+">View details &raquo;</button></p></div>"
 						}
+					//display data
 					titleCard.innerHTML = "Recipes";
 					display.innerHTML+=text;
 					$("button[name='viewRecipe']").click(function(){
@@ -241,7 +245,7 @@
 					})
 				}})
 			}
-			
+			//clear display tags
 			function clearDisplay(){
 				var display = document.getElementById("results");
 				var titleCard = document.getElementById("titleCard");
