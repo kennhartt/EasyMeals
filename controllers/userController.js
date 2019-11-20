@@ -41,7 +41,7 @@ module.exports.userLogin = async (req, res, next) => {
             res.status(200).send({
                 auth: true,
                 token: token,
-                user: user
+                user: user.username
             });
         }
     } catch (err) {
@@ -74,7 +74,8 @@ module.exports.createUser = async(req, res, next) => {
 
         user = await userCollection.insertOne({
             username: req.body.username,
-            password: hash.digest('base64')
+            password: hash.digest('base64'),
+            recipeList: []
         });
 
         if(user) {
@@ -160,6 +161,60 @@ module.exports.addRecipe = async (req, res, next) => {
             res.send(new Error("There was a problem with the request"));
         }
     } catch {
+        return next(err);
+    }
+}
+
+/**
+ * @param username
+ * Pass the user email as username in the body of the api call
+ * @param recipeId
+ * Pass the id of the recipe to remove in the body of the api call as recipeId
+ * 
+ * Removes the recipeId from the favorites list of the user
+ */
+module.exports.removeRecipe = async (req, res, next) => {
+    if (!authentication.authenticate(req, res))
+        return;
+
+        try{
+            let username = req.body.username;
+            let recipeId = req.body.recipeId;
+    
+            let response = await req.app.db.collection('Users').updateOne(
+                {username},
+                {$pull: {recipeList: recipeId}});
+    
+            if(response.result.nModified > 0) {
+                res.send("Recipe removed from favorites");
+            } else {
+                return next(new Error("Nothing to remove"));
+            }
+        } catch {
+            return next(err);
+        } 
+}
+
+/**
+ * @param username
+ * Pass the email of the username as username in the body of the api call
+ * 
+ * Returns the array list of recipe ids for that user
+ */
+module.exports.getUserRecipeIds = async (req, res, next) => {
+    if (!authentication.authenticate(req, res))
+        return;
+
+    try {
+        let username = req.body.username;
+        let user = await req.app.db.collection('Users').findOne({username});
+        if(!user) {
+            return next(new Error('No user found'));
+        }
+        let recipeList = user.recipeList;
+
+        res.send(recipeList);
+    } catch (err) {
         return next(err);
     }
 }

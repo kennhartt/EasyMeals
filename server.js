@@ -28,6 +28,8 @@ app.route('/api/user/createUser').post(userController.createUser); // Create use
 app.route('/api/user/login').post(userController.userLogin); // User login endpoint 
 app.route('/api/user/changePassword').post(userController.changePassword); // Change password
 app.route('/api/user/addRecipe').post(userController.addRecipe); // Add recipe to user list
+app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds); // Gets users recipe ids
+app.route('/api/user/removeRecipe').post(userController.removeRecipe) // Remove recipe from saved list
 
 // Recipe Query Controllers
 app.route('/api/query/byNatural').post(queryController.queryByNatural); // Finds recipes by natural text string
