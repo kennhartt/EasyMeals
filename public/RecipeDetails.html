@@ -12,6 +12,8 @@
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="login.js"></script>
+		<script src="userStatus.js"></script>
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -72,7 +74,7 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand ml-3" href="#">&#10086; EasyMeals</a>
+			<a class="navbar-brand ml-3" href="index.html">&#10086; EasyMeals</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -88,14 +90,14 @@
 					<li class="nav-item">
 						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
 					</li>
-					<li class="nav-item">
+					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="SignUp.html">Sign up</a>
+					<li id="signUpItem"	class="nav-item active">
+						<a class="nav-link btn-primary rounded" href="SignUp.html" role="button" style="width: 150px;text-align: center;">Sign up &#9753;</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe &#9753;</a>
+					<li id="logOutItem"	class="nav-item">
+						<a class="nav-link" href="index.html">Log out</a>
 					</li>
 				</ul>
     
@@ -103,14 +105,14 @@
 		</nav>
 
 		<main role="main">
-
 			<!-- Main jumbotron for a primary marketing message or call to action -->
 			<div class="jumbotron" style="margin-top: 30px;background-color: #ffffff">
 				<div class="container">
 					<!-- Example row of columns -->
 					<div class="row border-bottom">
+						<div><br /><br /></div>
+						<h1 id="titleCard"></h1>
 						<div class="col-md-4">
-							<h1 id="titleCard" class=""></h1>
 							<p><a id="testBtn" class="btn btn-primary btn-lg" role="button" style="width: 150px" hidden>Search &raquo;</a></p>
 						</div>
 	    	
@@ -141,7 +143,7 @@
 							Please enter a valid email address.
 						</div>
 					</div>
-               
+					
 					<div class="mb-3">
 						<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
 						<input type="password" class="form-control" id="passwordLogin" placeholder="Password" value="" required="">
@@ -153,9 +155,8 @@
 					<hr class="mb-4">
 					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())" >Login</button>
 					
-					<div class="mb-3">
-						<p>Don't have an account?<small><a href="SignUp.html">Sign up</a></small></p>
-					</div>
+					<a href="SignUp.html" style="font-size: 15px;margin-right: 18px;text-decoration: underline;margin-top: 10px">Don't have an account? Sign up</a>
+					
 			</div>
 			
 			<div style="padding-top: 200px" ></div>
@@ -190,6 +191,17 @@
 				
 			
 		$(function(){
+			var status = getUserStatus();
+			console.log(status);
+			if(status == 'true'){
+				$("#signInItem").hide();
+				$("#signUpItem").hide();
+				$("#logOutItem").show();
+			}else{
+				$("#signInItem").show();
+				$("#signUpItem").show();
+				$("#logOutItem").hide();
+			}
   			// jQuery methods go here...
 			clearDisplay();			
 			var display = document.getElementById("results");
@@ -208,7 +220,11 @@
 						success: function(res){
 							console.log(res);						
 							var text = "<div class='row fixed'>";
-							text += "<div class='col rounded'><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+recipeResult+"-556x370.jpg'/></p></div><div class='col rounded '><p>"+res.instructions+"</p></div></div>"
+							text += "<div class='col rounded'><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+recipeResult+"-556x370.jpg'/></p></div><div class='col rounded'><h1 class='h5'>Ingredients</h1><p>";
+							for(var count=0;count<res.extendedIngredients.length;count++){
+								text+= "&#8226 "+res.extendedIngredients[count].originalString+"<br/>";
+							}
+							text+="</div></p><div class='row fixed'><div class='col rounded border-bottom'><h1 class='h4 border-bottom' style='padding-bottom:10px'>Instructions</h1><p>"+res.instructions+"</p></div></div>";
 						titleCard.innerHTML = res.title;
 						display.innerHTML+=text;
 					}})
@@ -221,6 +237,13 @@
 				display.innerHTML = "";
 				titleCard.innerHTML = "";
 			}
+			
+			$("#logOutItem").click(function(){
+				var status2 = processLogOut();
+				if(status2 == 'false'){
+					window.location.href = "index.html";
+				}
+			})
 			
 			var testBtn = document.getElementById("testBtn");
 			testBtn.addEventListener("click",getData(window.location.hash.substring(1)),false)

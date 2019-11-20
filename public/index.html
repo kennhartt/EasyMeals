@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="login.js"></script>
+		<script src="userStatus.js"></script>
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -69,7 +70,7 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand ml-3" href="#">&#10086; EasyMeals</a>
+			<a class="navbar-brand ml-3" href="index.html">&#10086; EasyMeals</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -85,14 +86,14 @@
 					<li class="nav-item">
 						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
 					</li>
-					<li class="nav-item">
+					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="SignUp.html">Sign up</a>
+					<li id="signUpItem"	class="nav-item active">
+						<a class="nav-link btn-primary rounded" href="SignUp.html" role="button" style="width: 150px;text-align: center;">Sign up &#9753;</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe &#9753;</a>
+					<li id="logOutItem"	class="nav-item">
+						<a class="nav-link" href="index.html">Log out</a>
 					</li>
 				</ul>
     
@@ -152,7 +153,7 @@
 							Please enter a valid email address.
 						</div>
 					</div>
-               
+					
 					<div class="mb-3">
 						<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
 						<input type="password" class="form-control" id="passwordLogin" placeholder="Password" value="" required="">
@@ -162,11 +163,10 @@
 					</div>
 					
 					<hr class="mb-4">
-					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())" >Login</button>
+					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())">Login</button>
 					
-					<div class="mb-3">
-						<p>Don't have an account?<small><a href="SignUp.html">Sign up</a></small></p>
-					</div>
+					<a href="SignUp.html" style="font-size: 15px;margin-right: 18px;text-decoration: underline;margin-top: 10px">Don't have an account? Sign up</a>
+					
 			</div>
 			
 			<div style="padding-top: 200px" ></div>
@@ -185,7 +185,6 @@
 		<script src="./CSS/form-validation.js.download"></script>
 		
 		<script>
-		
 		function openNavLog() {
 			document.getElementById("mySidenavLogin").style.width = "500px";
 		}
@@ -195,7 +194,17 @@
 		}
 		
 		$(function(){
-
+			var status = getUserStatus();
+			console.log(status);
+			if(status == 'true'){
+				$("#signInItem").hide();
+				$("#signUpItem").hide();
+				$("#logOutItem").show();
+			}else{
+				$("#signInItem").show();
+				$("#signUpItem").show();
+				$("#logOutItem").hide();
+			}
   			// jQuery methods go here...
 			function queryByIngredient(naturalString){
 				clearDisplay();
@@ -224,7 +233,6 @@
 								}
 							}
 							text += "<div class='col-md-4 rounded'><h1 class='h5'>"+title+"</h1><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+res.results[i].id+"-556x370.jpg' style='height: 250px'/></p><p><button name='viewRecipe' class='btn btn-secondary' role='button' value="+res.results[i].id+">View details &raquo;</button></p></div>"
-							
 						}
 					titleCard.innerHTML = "Recipes";
 					display.innerHTML+=text;
@@ -246,6 +254,9 @@
 				queryByIngredient($("#searchData").val());
 			})
 			
+			$("#logOutItem").click(function(){
+				processLogOut();
+			})
 			
 			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
 		});

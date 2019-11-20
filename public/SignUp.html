@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="login.js"></script>
+		<script src="userStatus.js"></script>
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -69,7 +70,7 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand ml-3" href="#">&#10086; EasyMeals</a>
+			<a class="navbar-brand ml-3" href="index.html">&#10086; EasyMeals</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -85,14 +86,14 @@
 					<li class="nav-item">
 						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
 					</li>
-					<li class="nav-item">
+					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Sign up</a>
+					<li id="signUpItem"	class="nav-item active">
+						<a class="nav-link btn-primary rounded" href="SignUp.html" role="button" style="width: 150px;text-align: center;">Sign up &#9753;</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe &#9753;</a>
+					<li id="logOutItem"	class="nav-item">
+						<a class="nav-link" href="index.html">Log out</a>
 					</li>
 				</ul>
     
@@ -164,9 +165,8 @@
 					<hr class="mb-4">
 					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())" >Login</button>
 					
-					<div class="mb-3">
-						<p>Don't have an account?<span><a href="SignUp.html">Sign up</a></span></p>
-					</div>
+					<a href="SignUp.html" style="font-size: 15px;margin-right: 18px;text-decoration: underline;margin-top: 10px">Don't have an account? Sign up</a>
+					
 			</div>
 			
 			<div style="padding-top: 200px" ></div>
@@ -246,7 +246,17 @@
 		}
 		
 		$(function(){
-
+			var status = getUserStatus();
+			console.log(status);
+			if(status == 'true'){
+				$("#signInItem").hide();
+				$("#signUpItem").hide();
+				$("#logOutItem").show();
+			}else{
+				$("#signInItem").show();
+				$("#signUpItem").show();
+				$("#logOutItem").hide();
+			}
   			// jQuery methods go here...
 			function queryByIngredient(naturalString){
 				clearDisplay();
@@ -297,6 +307,9 @@
 				queryByIngredient($("#searchData").val());
 			})
 			
+			$("#logOutItem").click(function(){
+				processLogOut();
+			})
 			
 			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
 		});

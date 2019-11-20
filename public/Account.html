@@ -10,8 +10,10 @@
 	<title>Account</title>
 
 	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="login.js"></script>
+	<script src="userStatus.js"></script>
 
 	<style>
 		.bd-placeholder-img {
@@ -70,36 +72,35 @@
 
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<a class="navbar-brand ml-3" href="#">&#10086; EasyMeals</a>
+		<a class="navbar-brand ml-3" href="index.html">&#10086; EasyMeals</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
 			aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav ml-auto mr-3 w-100 justify-content-end">
-				<li class="nav-item">
-					<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="Account.html">Account</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" onclick="openNav()">Sign in</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" onclick="openNav()">Sign up</a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe
-						&#9753;</a>
-				</li>
-			</ul>
-
-		</div>
+				<ul class="navbar-nav ml-auto mr-3 w-100 justify-content-end">
+					<li class="nav-item active">
+						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="Account.html">Account</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					</li>
+					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
+						<a class="nav-link" onclick="openNavLog()">Sign in</a>
+					</li>
+					<li id="signUpItem"	class="nav-item active">
+						<a class="nav-link btn-primary rounded" href="SignUp.html" role="button" style="width: 150px;text-align: center;">Sign up &#9753;</a>
+					</li>
+					<li id="logOutItem"	class="nav-item">
+						<a class="nav-link" href="index.html">Log out</a>
+					</li>
+				</ul>
+    
+			</div>
 	</nav>
 
 	<main role="main">
@@ -206,10 +207,25 @@
 
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
-		}
+		}		
 
-
-		$(document).ready(function () {
+		$(function () {
+			var status = getUserStatus();
+			console.log(status);
+			if(status == 'true'){
+				$("#signInItem").hide();
+				$("#signUpItem").hide();
+				$("#logOutItem").show();
+			}else{
+				$("#signInItem").show();
+				$("#signUpItem").show();
+				$("#logOutItem").hide();
+			}
+			
+			$("#logOutItem").click(function(){
+				processLogOut();
+			})
+			
 			let enteredCurrentPassword, newPass, conPass;
 			$("#passChange").click(function () {
 				enteredCurrentPassword = $('#curPassword').val();
