@@ -7,12 +7,11 @@
 		<meta name="description" content="">
 		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 		<meta name="generator" content="Jekyll v3.8.5">
-		<title>Home</title>
+		<title>Search Results</title>
 
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="login.js"></script>
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -63,6 +62,10 @@
 				margin-left: 50px;
 				padding-top: 60px;
 			}
+			
+			.results {
+				overflow: hidden;
+			}
 		</style>
 		<!-- Custom styles for this template -->
 		<link href="jumbotron.css" rel="stylesheet">
@@ -102,42 +105,28 @@
 		<main role="main">
 
 			<!-- Main jumbotron for a primary marketing message or call to action -->
-			<div class="jumbotron" style="margin-top: 30px;background: url('Images/foodBck2.jpg');background-size: cover; ">
+			<div class="jumbotron" style="margin-top: 30px;background-color: #ffffff">
 				<div class="container">
-					<h1 class="display-3" style="margin-bottom: 20px;color: #ffffff;font-weight: normal;">Stay Hungry!</h1>
-					<table class="justify-content-md-around">
-						<tr>
-							<td>
-								<input type="text" class="form-control" id="searchData" placeholder="What are you looking for?" value="" required="" style="margin-bottom: 18px;width:800px;height: 47px;margin-right: 10px">	
-							</td>
-							<td>
-								<p><a id="searchBtn" class="btn btn-primary btn-lg" role="button" style="width: 150px">Search &raquo;</a></p>
-							</td>
-						</tr>
-					</table>
-      
-     
-				</div>
+					<!-- Example row of columns -->
+					<div class="row border-bottom">
+						<div class="col-md-4">
+							<h1 id="titleCard" class=""></h1>
+							<p><a id="testBtn" class="btn btn-primary btn-lg" role="button" style="width: 150px" hidden>Search &raquo;</a></p>
+						</div>
+	    	
+					</div>
+					
+					<div id="results" class="table" style="margin-top: 13px">
+						
+					</div>
+
+					<hr>
+
+				</div> <!-- /container -->	
 			</div>
 
-			<div class="container">
-				<!-- Example row of columns -->
-				<div class="row border-bottom">
-					<div class="col-md-4">
-						<h1 id="titleCard" class="">Recipes</h1>
-					</div>
-    	
-				</div>
-				<div id="results" class="table" style="margin-top: 13px">
-					
-				</div>
-
-				<hr>
-
-			</div> <!-- /container -->
-
 		</main>
-		
+
 		<!-- sideBar Login -->
 		<div id="mySidenavLogin" class="sidenav text-center border-left">			
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -186,53 +175,45 @@
 		
 		<script>
 		
+		function openNavReg() {
+			document.getElementById("mySidenav").style.width = "500px";
+		}
+		
 		function openNavLog() {
 			document.getElementById("mySidenavLogin").style.width = "500px";
 		}
 
 		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
 			document.getElementById("mySidenavLogin").style.width = "0px";
 		}
-		
+				
+			
 		$(function(){
-
   			// jQuery methods go here...
-			function queryByIngredient(naturalString){
-				clearDisplay();
-				var display = document.getElementById("results");
-				var titleCard = document.getElementById("titleCard");
-				var count = 1;
+			clearDisplay();			
+			var display = document.getElementById("results");
+			var titleCard = document.getElementById("titleCard");
+			
+			var recipeResult = window.location.hash.substring(1);
+			
+			
+			function getData(recipeResult){
+				console.log(recipeResult);
 				$.ajax({
-					url: 'http://localhost:8000/api/query/byNatural',
-					type: 'POST',
-					contentType: 'application/json',
-					data: JSON.stringify({naturalString}),
-					success: function(res){
-						console.log(res);
-						var text = "<div class='row'>";
-						
-						for(var i = 0; i < res.results.length;i++){
-							var title = res.results[i].title;
-							if(title.length>25){
-								title = title.substring(0,25) + "...";
-							}
-							
-							if(i%3 == 0){
-								text += "</div>";
-								if(i!=res.results.length-1){
-									text+="<div class='row'>";
-								}
-							}
-							text += "<div class='col-md-4 rounded'><h1 class='h5'>"+title+"</h1><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+res.results[i].id+"-556x370.jpg' style='height: 250px'/></p><p><button name='viewRecipe' class='btn btn-secondary' role='button' value="+res.results[i].id+">View details &raquo;</button></p></div>"
-							
-						}
-					titleCard.innerHTML = "Recipes";
-					display.innerHTML+=text;
-					$("button[name='viewRecipe']").click(function(){
-						window.location.href = "RecipeDetails.html" + "#" + $(this).val();
-					})
-				}})
+						url: 'http://localhost:8000/api/query/getRecipeById',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({"recipeId":recipeResult}),
+						success: function(res){
+							console.log(res);						
+							var text = "<div class='row fixed'>";
+							text += "<div class='col rounded'><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+recipeResult+"-556x370.jpg'/></p></div><div class='col rounded '><p>"+res.instructions+"</p></div></div>"
+						titleCard.innerHTML = res.title;
+						display.innerHTML+=text;
+					}})
 			}
+			
 			
 			function clearDisplay(){
 				var display = document.getElementById("results");
@@ -240,17 +221,11 @@
 				display.innerHTML = "";
 				titleCard.innerHTML = "";
 			}
-					
-			var searchBtn = document.getElementById("searchBtn");
-			$("#searchBtn").click(function(){
-				queryByIngredient($("#searchData").val());
-			})
 			
+			var testBtn = document.getElementById("testBtn");
+			testBtn.addEventListener("click",getData(window.location.hash.substring(1)),false)
 			
-			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
 		});
-		
-
 		</script>
 	</body>
     

@@ -8,9 +8,6 @@ function processLogin(username,password){
 			console.log(res);
 			localStorage.setItem("userInfo",JSON.stringify(res));
 			window.location.href = "Registration_success.html";
-		},
-		error: function(res){
-			console.log("Fuck off");
 		}
 		
 	})	
