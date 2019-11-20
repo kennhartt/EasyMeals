@@ -7,11 +7,13 @@
 		<meta name="description" content="">
 		<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 		<meta name="generator" content="Jekyll v3.8.5">
-		<title>Saved Recipes</title>
+		<title>Saved Recipe</title>
 
 		<!-- Bootstrap core CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="login.js"></script>
+		<script src="userStatus.js"></script>
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -78,20 +80,20 @@
 					<li class="nav-item">
 						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
+					<li id="accountItem" class="nav-item">
 						<a class="nav-link" href="Account.html">Account</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					<li id="savedRecipes" class="nav-item active">
+						<a class="nav-link" href="javascript:void(0)">Saved Recipes</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" onclick="openNav()">Sign in</a>
+					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
+						<a class="nav-link" onclick="openNavLog()">Sign in</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" onclick="openNav()">Sign up</a>
+					<li id="signUpItem"	class="nav-item active">
+						<a class="nav-link btn-primary rounded" href="SignUp.html" role="button" style="width: 150px;text-align: center;">Sign up &#9753;</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link btn-primary rounded" href="#" role="button" style="width: 150px;">Add your recipe &#9753;</a>
+					<li id="logOutItem"	class="nav-item">
+						<a class="nav-link" href="index.html">Log out</a>
 					</li>
 				</ul>
     
@@ -101,96 +103,57 @@
 		<main role="main">
 
 			<!-- Main jumbotron for a primary marketing message or call to action -->
-			<div class="jumbotron" style="margin-top: 30px;background-size: cover; ">
+			<div class="jumbotron" style="margin-top: 30px;background-color:#ffffff ">
 				<div class="container">
-				<!-- Example row of columns -->
-					<div class="row">
+					<!-- Example row of columns -->
+					<div class="row border-bottom">
 						<div class="col-md-4">
-							<h1 class="">Saved Recipes</h1>
+							<h1 id="titleCard" class="">Saved Recipes</h1>
 						</div>
 	    	
 					</div>
-				<div class="table">
-					<div class="row">
-						<div class="col-md-4 rounded">
-							<h1 class="h5">Rotisserie Chicken and Bean Tostadas</h1>
-							<p><img class="rounded" src="https://webknox.com/recipeImages/1098354-556x370.jpg" style="height: 250px"/></p>
-							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-						</div>
-						<div class="col-md-4 rounded">
-							<h1 class="h5">Watermelon Salad with Feta, Walnut...</h1>
-							<p><img class="rounded" src="https://webknox.com/recipeImages/1098388-556x370.jpg" style="height: 250px"/></p>
-							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-						</div>
-						<div class="col-md-4 rounded">
-							<h1 class="h5">Hush Puppies</h1>
-							<p><img class="rounded" src="https://webknox.com/recipeImages/1098392-556x370.jpg" style="height: 250px"/></p>
-							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-						</div>
+					<div id="results" class="table" style="margin-top: 13px">
+						
 					</div>
-					<div class="row">
-						<div class="col-md-4 rounded">
-							<h1 class="h5">Olive Tapenade Flatbread</h1>
-							<p><img class="rounded" src="https://webknox.com/recipeImages/1098351-556x370.jpg" style="height: 250px"/></p>
-							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-						</div>
-						<div class="col-md-4 rounded">
-							<h1 class="h5">Quinoa Salad with Barberries...</h1>
-							<p><img class="rounded" src="https://webknox.com/recipeImages/1098387-556x370.jpg" style="height: 250px"/></p>
-							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-						</div>
-						<div class="col-md-4 rounded">
-							<h1 class="h5">Pan Fried Potato Wedges</h1>
-							<p><img class="rounded" src="https://webknox.com/recipeImages/1099404-556x370.jpg" style="height: 250px"/></p>
-							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-				<hr>
+
+					<hr>
 
 				</div> <!-- /container -->
+				<p><a id="searchBtn" class="btn btn-primary btn-lg" role="button" style="width: 150px" hidden>Search &raquo;</a></p>
 			</div>
 
 			
-
+			
 		</main>
 		
-		<!-- sideBar Registration/Login -->
-		<div id="mySidenav" class="sidenav text-center border-left">			
+		<!-- sideBar Login -->
+		<div id="mySidenavLogin" class="sidenav text-center border-left">			
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<div class="py-5 text-center">			
 				<h4 class="font-weight-bold">Welcome to EasyMeals</h4>
-				<h5>Fill out the form to get started.</h5>
 			</div>
 			<div class="col-md-9 order-md-1" style="margin: auto">      
-				<form class="needs-validation" novalidate="" action="./Account_Reservations.html">        
 					<div class="mb-3">
 						<label for="email">Email</label>
-						<input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required="">
+						<input type="email" class="form-control" id="emailLogin" placeholder="you@example.com" value="" required="">
 						<div class="invalid-feedback">
 							Please enter a valid email address.
 						</div>
 					</div>
-               
+					
 					<div class="mb-3">
 						<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
-						<input type="password" class="form-control" id="password" placeholder="Password" value="" required="">
+						<input type="password" class="form-control" id="passwordLogin" placeholder="Password" value="" required="">
 						<div class="invalid-feedback">
 							Please enter a valid password.
 						</div>
 					</div>
-        
-					<div class="mb-3">
-						<label for="conpassword">Confirm Password</label>
-						<input type="password" class="form-control" id="conpassword" placeholder="Confirm Password" value="" required="">
-						<div class="invalid-feedback">
-							Please re-enter your password.
-						</div>
-					</div>
-              
+					
 					<hr class="mb-4">
-					<button class="btn btn-primary btn-lg btn-default" type="submit" >Get Started</button>
-				</form>
+					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())">Login</button>
+					
+					<a href="SignUp.html" style="font-size: 15px;margin-right: 18px;text-decoration: underline;margin-top: 10px">Don't have an account? Sign up</a>
+					
 			</div>
 			
 			<div style="padding-top: 200px" ></div>
@@ -204,23 +167,102 @@
 		<footer class="container">
 			<p>&copy; EasyMeals 2019</p>
 		</footer>
+				
 		
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-		<script src="/docs/4.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-		<script src="./CSS/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-		<script src="./CSS/bootstrap.bundle.min.js.download" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 		<script src="./CSS/form-validation.js.download"></script>
 		
 		<script>
-			function openNav() {
-				document.getElementById("mySidenav").style.width = "500px";
-			}
+		function openNavLog() {
+			document.getElementById("mySidenavLogin").style.width = "500px";
+		}
 
-			function closeNav() {
-				document.getElementById("mySidenav").style.width = "0";
+		function closeNav() {
+			document.getElementById("mySidenavLogin").style.width = "0px";
+		}
+		
+		$(function(){
+			var status = getUserStatus();
+
+			if(status == 'true'){
+				$("#signInItem").hide();
+				$("#signUpItem").hide();
+				$("#accountItem").show();
+				$("#logOutItem").show();
+			}else{
+				$("#signInItem").show();
+				$("#signUpItem").show();
+				$("#accountItem").hide();
+				$("#logOutItem").hide();
 			}
+  			// jQuery methods go here...
+			function queryByIngredient(){
+				clearDisplay();
+				var display = document.getElementById("results");
+				var titleCard = document.getElementById("titleCard");
+				var userInfo = localStorage.getItem('userInfo');
+				userInfo = JSON.parse(userInfo);
+				var username = userInfo.user;
+				var token = userInfo.token;
+				$.ajax({
+					url: 'http://localhost:8000/api/query/getUserRecipes',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({username}),
+					headers: {"x-access-token": token},
+					success: function(res){
+
+						var text = "<div class='row'>";
+						
+						for(var i = 0; i < res.length;i++){
+							var title = res[i].title;
+							if(title.length>25){
+								title = title.substring(0,25) + "...";
+							}
+							
+							if(i%3 == 0){
+								text += "</div>";
+								if(i!=res.length-1){
+									text+="<div class='row'>";
+								}
+							}
+							text += "<div class='col-md-4 rounded'><h1 class='h5'>"+title+"</h1><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+res[i].id+"-556x370.jpg' style='height: 250px'/></p><p><button name='viewRecipe' class='btn btn-secondary' role='button' value="+res[i].id+">View details &raquo;</button></p></div>"
+						}
+					titleCard.innerHTML = "Saved Recipes";
+					display.innerHTML+=text;
+					$("button[name='viewRecipe']").click(function(){
+						window.location.href = "RecipeDetails.html" + "#" + $(this).val();
+					})
+				}})
+			}
+			
+			function clearDisplay(){
+				var display = document.getElementById("results");
+				var titleCard = document.getElementById("titleCard");
+				display.innerHTML = "";
+				titleCard.innerHTML = "";
+			}
+					
+			var searchBtn = document.getElementById("searchBtn");
+			$("#searchBtn").click(function(){
+				queryByIngredient($("#searchData").val());
+			})
+			
+			$("#logOutItem").click(function(){
+				processLogOut();
+			})
+			
+			$("#savedRecipes").click(function() {
+				if(getUserStatus() == "true") {
+					window.location.href = "SavedRecipes.html";
+				} else {
+					window.location.href = "SignUp.html";
+				}
+			})
+			
+			searchBtn.addEventListener("click",queryByIngredient(),false);
+		});
+		
+
 		</script>
 	</body>
     

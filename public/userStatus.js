@@ -12,6 +12,4 @@ function getUserStatus(){
 
 function processLogOut(){
 	localStorage.removeItem("userInfo");
-	
-
 }

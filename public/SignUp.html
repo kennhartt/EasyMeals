@@ -32,7 +32,7 @@
 			
 			.sidenav {
 				height: 120%;
-				width: 500px;
+				width: 700px;
 				position: fixed;
 				z-index: 1;
 				top: 0;
@@ -80,11 +80,11 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
+					<li id="accountItem" class="nav-item">
 						<a class="nav-link" href="Account.html">Account</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					<li id="savedRecipes" class="nav-item">
+						<a class="nav-link" href="javascript:void(0)">Saved Recipes</a>
 					</li>
 					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
@@ -103,40 +103,15 @@
 		<main role="main">
 
 			<!-- Main jumbotron for a primary marketing message or call to action -->
-			<div class="jumbotron" style="margin-top: 30px;background: url('Images/foodBck2.jpg');background-size: cover; ">
+			<div class="jumbotron border" style="margin-top: 250px;margin-right: 570px;background-color:#ffffff">
 				<div class="container">
-					<h1 class="display-3" style="margin-bottom: 20px;color: #ffffff;font-weight: normal;">Stay Hungry!</h1>
-					<table class="justify-content-md-around">
-						<tr>
-							<td>
-								<input type="text" class="form-control" id="searchData" placeholder="What are you looking for?" value="" required="" style="margin-bottom: 18px;width:800px;height: 47px;margin-right: 10px">	
-							</td>
-							<td>
-								<p><a id="searchBtn" class="btn btn-primary btn-lg" role="button" style="width: 150px">Search &raquo;</a></p>
-							</td>
-						</tr>
-					</table>
-      
-     
+					<h1 class="display-1" style="margin-bottom: 20px;font-weight: bolder;">By Signing Up </h1>
+					<br/>
+					<h1 class="display-4" style="margin-bottom: 20px;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You can save your favourite recipes,</h1>
+					<br/>
+					<h1 class="display-5" style="margin-bottom: 20px;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;with just one click!</h1>
 				</div>
 			</div>
-
-			<div class="container">
-				<!-- Example row of columns -->
-				<div class="row border-bottom">
-					<div class="col-md-4">
-						<h1 id="titleCard" class="">Recipes</h1>
-					</div>
-    	
-				</div>
-				<div id="results" class="table" style="margin-top: 13px">
-					
-				</div>
-
-				<hr>
-
-			</div> <!-- /container -->
-
 		</main>
 		
 		<!-- sideBar Login -->
@@ -185,7 +160,7 @@
 				<h5>Fill out the form to get started.</h5>
 			</div>
 			<div class="col-md-9 order-md-1" style="margin: auto">      
-				<form class="needs-validation" novalidate="" action="./Account_Reservations.html">        
+				<form class="needs-validation" novalidate="" action="">        
 					<div class="mb-3">
 						<label for="email">Email</label>
 						<input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required="">
@@ -223,7 +198,7 @@
 			
 		</div>
 
-		<footer class="container">
+		<footer class="container" style="margin-top: 500px">
 			<p>&copy; EasyMeals 2019</p>
 		</footer>
 				
@@ -247,14 +222,15 @@
 		
 		$(function(){
 			var status = getUserStatus();
-			console.log(status);
 			if(status == 'true'){
 				$("#signInItem").hide();
 				$("#signUpItem").hide();
+				$("#accountItem").show();
 				$("#logOutItem").show();
 			}else{
 				$("#signInItem").show();
 				$("#signUpItem").show();
+				$("#accountItem").hide();
 				$("#logOutItem").hide();
 			}
   			// jQuery methods go here...
@@ -269,7 +245,6 @@
 					contentType: 'application/json',
 					data: JSON.stringify({naturalString}),
 					success: function(res){
-						console.log(res);
 						var text = "<div class='row'>";
 						
 						for(var i = 0; i < res.results.length;i++){
@@ -309,6 +284,14 @@
 			
 			$("#logOutItem").click(function(){
 				processLogOut();
+			})
+			
+			$("#savedRecipes").click(function() {
+				if(getUserStatus() == "true") {
+					window.location.href = "SavedRecipes.html";
+				} else {
+					window.location.href = "SignUp.html";
+				}
 			})
 			
 			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);

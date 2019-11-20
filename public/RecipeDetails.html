@@ -30,6 +30,15 @@
 				}
 			}
 			
+			.row {
+			    display: -ms-flexbox;
+			    display: flex;
+			    -ms-flex-wrap: wrap;
+			    flex-wrap: wrap;
+			    margin-right: -15px;
+			    margin-left: -15px;
+			    margin-bottom: 22px;
+			}
 			.sidenav {
 				height: 120%;
 				width: 0;
@@ -84,11 +93,11 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
+					<li id="accountItem" class="nav-item">
 						<a class="nav-link" href="Account.html">Account</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					<li id="savedRecipes" class="nav-item">
+						<a class="nav-link" href="javascript:void(0)">Saved Recipes</a>
 					</li>
 					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
@@ -192,14 +201,16 @@
 			
 		$(function(){
 			var status = getUserStatus();
-			console.log(status);
+			
 			if(status == 'true'){
 				$("#signInItem").hide();
 				$("#signUpItem").hide();
+				$("#accountItem").show();
 				$("#logOutItem").show();
 			}else{
 				$("#signInItem").show();
 				$("#signUpItem").show();
+				$("#accountItem").hide();
 				$("#logOutItem").hide();
 			}
   			// jQuery methods go here...
@@ -211,25 +222,79 @@
 			
 			
 			function getData(recipeResult){
-				console.log(recipeResult);
+				
 				$.ajax({
 						url: 'http://localhost:8000/api/query/getRecipeById',
 						type: 'POST',
 						contentType: 'application/json',
 						data: JSON.stringify({"recipeId":recipeResult}),
 						success: function(res){
-							console.log(res);						
-							var text = "<div class='row fixed'>";
+													
+							var text = "<div class='row fixed' style='margin-bottom:22px'>";
 							text += "<div class='col rounded'><p><img class='rounded' src='https://spoonacular.com/recipeImages/"+recipeResult+"-556x370.jpg'/></p></div><div class='col rounded'><h1 class='h5'>Ingredients</h1><p>";
 							for(var count=0;count<res.extendedIngredients.length;count++){
 								text+= "&#8226 "+res.extendedIngredients[count].originalString+"<br/>";
 							}
 							text+="</div></p><div class='row fixed'><div class='col rounded border-bottom'><h1 class='h4 border-bottom' style='padding-bottom:10px'>Instructions</h1><p>"+res.instructions+"</p></div></div>";
-						titleCard.innerHTML = res.title;
+						titleCard.innerHTML = res.title + " <a id='star' role='button' style='text-decoration:none'>&#9734</a>";
 						display.innerHTML+=text;
+						favourite();
+									$("#star").click(function(){
+				let userInfo = localStorage.getItem('userInfo');
+				if(userInfo) {
+					userInfo = JSON.parse(userInfo);
+					if(localStorage.getItem("saved") == "true") {
+											$.ajax({
+						url: 'http://localhost:8000/api/user/removeRecipe',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({"username": userInfo.user, "recipeId": recipeResult}),
+						headers: {'x-access-token': userInfo.token},
+						success: function(res){
+								$("#star").html("&#9734");
+								localStorage.setItem("saved", "false");
+					}})
+					} else {
+						$.ajax({
+						url: 'http://localhost:8000/api/user/addRecipe',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({"username": userInfo.user, "recipeId": recipeResult}),
+						headers: {'x-access-token': userInfo.token},
+						success: function(res){
+								$("#star").html("&#9733");
+								localStorage.setItem("saved", "true");
+					}})
+					}
+				}else{
+					window.location.href = "SignUp.html";
+				}
+			})
 					}})
 			}
 			
+			function favourite(){
+				let userInfo = localStorage.getItem("userInfo");
+				if(userInfo){
+					userInfo = JSON.parse(userInfo);
+					
+					$.ajax({
+						url: 'http://localhost:8000/api/user/getUserRecipeIds',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({"username": userInfo.user}),
+						headers: {'x-access-token': userInfo.token},
+						success: function(res){
+							if(res.includes(recipeResult)) {
+								$("#star").html("&#9733");
+								localStorage.setItem("saved", "true");
+							} else {
+								$("#star").html("&#9734");
+								localStorage.setItem("saved", "false");
+							}
+					}})
+				}
+			}
 			
 			function clearDisplay(){
 				var display = document.getElementById("results");
@@ -245,8 +310,16 @@
 				}
 			})
 			
+			$("#savedRecipes").click(function() {
+				if(getUserStatus() == "true") {
+					window.location.href = "SavedRecipes.html";
+				} else {
+					window.location.href = "SignUp.html";
+				}
+			})
+			
 			var testBtn = document.getElementById("testBtn");
-			testBtn.addEventListener("click",getData(window.location.hash.substring(1)),false)
+			testBtn.addEventListener("click",getData(window.location.hash.substring(1)),false);			
 			
 		});
 		</script>

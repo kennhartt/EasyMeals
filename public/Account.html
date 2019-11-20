@@ -10,9 +10,10 @@
 	<title>Account</title>
 
 	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="login.js"></script>
+	<script src="userStatus.js"></script>
 	<style>
 		.bd-placeholder-img {
 			font-size: 1.125rem;
@@ -78,14 +79,14 @@
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav ml-auto mr-3 w-100 justify-content-end">
-					<li class="nav-item active">
+					<li class="nav-item ">
 						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
+					<li id="accountItem" class="nav-item active">
 						<a class="nav-link" href="Account.html">Account</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					<li id="savedRecipes" class="nav-item">
+						<a class="nav-link" href="javascript:void(0)">Saved Recipes</a>
 					</li>
 					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
@@ -138,59 +139,48 @@
 				<button class="btn-group-lg" style="width: 150px;margin-top: 20px" id="passChange" type="submit">Change
 					Password</button>
 			</div>
-			</form>
+			
 		</div>
-		</div>
+		
 	</main>
 
-	<!-- sideBar Registration/Login -->
-	<div id="mySidenav" class="sidenav text-center border-left">
-		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<div class="py-5 text-center">
-			<h4 class="font-weight-bold">Welcome to EasyMeals</h4>
-			<h5>Fill out the form to get started.</h5>
-		</div>
-		<div class="col-md-9 order-md-1" style="margin: auto">
-			<form class="needs-validation" novalidate="" action="./Account_Reservations.html">
-				<div class="mb-3">
-					<label for="email">Email</label>
-					<input type="email" class="form-control" id="email" placeholder="you@example.com" value=""
-						required="">
-					<div class="invalid-feedback">
-						Please enter a valid email address.
+	<!-- sideBar Login -->
+		<div id="mySidenavLogin" class="sidenav text-center border-left">			
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<div class="py-5 text-center">			
+				<h4 class="font-weight-bold">Welcome to EasyMeals</h4>
+			</div>
+			<div class="col-md-9 order-md-1" style="margin: auto">      
+					<div class="mb-3">
+						<label for="email">Email</label>
+						<input type="email" class="form-control" id="emailLogin" placeholder="you@example.com" value="" required="">
+						<div class="invalid-feedback">
+							Please enter a valid email address.
+						</div>
 					</div>
-				</div>
-
-				<div class="mb-3">
-					<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
-					<input type="password" class="form-control" id="password" placeholder="Password" value=""
-						required="">
-					<div class="invalid-feedback">
-						Please enter a valid password.
+					
+					<div class="mb-3">
+						<label for="password">Password <span class="text-muted">(8 or more characters)</span></label>
+						<input type="password" class="form-control" id="passwordLogin" placeholder="Password" value="" required="">
+						<div class="invalid-feedback">
+							Please enter a valid password.
+						</div>
 					</div>
-				</div>
-
-				<div class="mb-3">
-					<label for="conpassword">Confirm Password</label>
-					<input type="password" class="form-control" id="conpassword" placeholder="Confirm Password" value=""
-						required="">
-					<div class="invalid-feedback">
-						Please re-enter your password.
-					</div>
-				</div>
-
-				<hr class="mb-4">
-				<button class="btn btn-primary btn-lg btn-default" type="submit">Get Started</button>
-			</form>
+					
+					<hr class="mb-4">
+					<button class="btn btn-primary btn-lg btn-default" type="submit" onclick="processLogin($('#emailLogin').val(),$('#passwordLogin').val())">Login</button>
+					
+					<a href="SignUp.html" style="font-size: 15px;margin-right: 18px;text-decoration: underline;margin-top: 10px">Don't have an account? Sign up</a>
+					
+			</div>
+			
+			<div style="padding-top: 200px" ></div>
+			
+			<div style="height: 200px;padding-top: 50px;background:url('Images/footer.jpg');background-size: contain;">
+				<h6>© 2019 EasyMeals</h6>
+			</div>	
+			
 		</div>
-
-		<div style="padding-top: 200px"></div>
-
-		<div style="height: 200px;padding-top: 50px;background:url('Images/footer.jpg');background-size: contain;">
-			<h6>© 2019 EasyMeals</h6>
-		</div>
-
-	</div>
 
 	<footer class="container" style="margin-right: 520px">
 		<p>&copy; EasyMeals 2019</p>
@@ -199,24 +189,33 @@
 	<script src="./CSS/form-validation.js.download"></script>
 
 	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "500px";
+		function openNavLog() {
+			document.getElementById("mySidenavLogin").style.width = "500px";
 		}
 
 		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}		
-
+			document.getElementById("mySidenavLogin").style.width = "0px";
+		}
+		
+		$("#savedRecipes").click(function() {
+			if(getUserStatus() == "true") {
+				window.location.href = "SavedRecipes.html";
+			} else {
+				window.location.href = "SignUp.html";
+			}
+		})
+		
 		$(function () {
 			var status = getUserStatus();
-			console.log(status);
 			if(status == 'true'){
 				$("#signInItem").hide();
 				$("#signUpItem").hide();
+				$("#accountItem").show();
 				$("#logOutItem").show();
 			}else{
 				$("#signInItem").show();
 				$("#signUpItem").show();
+				$("#accountItem").hide();
 				$("#logOutItem").hide();
 			}
 			

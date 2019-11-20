@@ -80,11 +80,11 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
+					<li id="accountItem" class="nav-item">
 						<a class="nav-link" href="Account.html">Account</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="SavedRecipes.html">Saved Recipes</a>
+					<li id="savedRecipes" class="nav-item">
+						<a class="nav-link" href="javascript:void(0)">Saved Recipes</a>
 					</li>
 					<li id="signInItem"	class="nav-item" style="padding-right: 20px">
 						<a class="nav-link" onclick="openNavLog()">Sign in</a>
@@ -195,14 +195,15 @@
 		
 		$(function(){
 			var status = getUserStatus();
-			console.log(status);
 			if(status == 'true'){
 				$("#signInItem").hide();
 				$("#signUpItem").hide();
+				$("#accountItem").show();
 				$("#logOutItem").show();
 			}else{
 				$("#signInItem").show();
 				$("#signUpItem").show();
+				$("#accountItem").hide();
 				$("#logOutItem").hide();
 			}
   			// jQuery methods go here...
@@ -217,7 +218,7 @@
 					contentType: 'application/json',
 					data: JSON.stringify({naturalString}),
 					success: function(res){
-						console.log(res);
+
 						var text = "<div class='row'>";
 						
 						for(var i = 0; i < res.results.length;i++){
@@ -259,6 +260,14 @@
 			})
 			
 			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
+			
+			$("#savedRecipes").click(function() {
+				if(getUserStatus() == "true") {
+					window.location.href = "SavedRecipes.html";
+				} else {
+					window.location.href = "SignUp.html";
+				}
+			})
 		});
 		
 
