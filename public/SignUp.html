@@ -160,7 +160,7 @@
 				<h5>Fill out the form to get started.</h5>
 			</div>
 			<div class="col-md-9 order-md-1" style="margin: auto">      
-				<form class="needs-validation" novalidate="" action="">        
+				<form class="needs-validation" novalidate="" id="register">        
 					<div class="mb-3">
 						<label for="email">Email</label>
 						<input type="email" class="form-control" id="email" placeholder="you@example.com" value="" required="">
@@ -179,14 +179,16 @@
         
 					<div class="mb-3">
 						<label for="conpassword">Confirm Password</label>
-						<input type="password" class="form-control" id="conpassword" placeholder="Confirm Password" value="" required="">
+						<input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" value="" required="">
 						<div class="invalid-feedback">
 							Please re-enter your password.
 						</div>
 					</div>
-              
+					<div class="mb-3">
+						<p id="errMsg"></p>
+					</div>
 					<hr class="mb-4">
-					<button class="btn btn-primary btn-lg btn-default" type="submit" >Get Started</button>
+					<button class="btn btn-primary btn-lg btn-default" type="submit">Get Started</button>
 				</form>
 			</div>
 			
@@ -295,6 +297,37 @@
 			})
 			
 			searchBtn.addEventListener("click",queryByIngredient("pizza"),false);
+
+			let username, password, confirmPassword;
+            $("#register").submit(function(e) {
+                e.preventDefault();
+                username = $("#email").val();
+                password = $("#password").val();
+                confirmPassword = $("#confirmPassword").val();
+                    if (password === confirmPassword && password.length >= 8) {
+
+
+
+                        $.ajax({
+                            url: 'http://localhost:8000/api/user/createUser/',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+								username,
+								password
+                            }),
+                            success: function(res) {
+                                window.location.href = "Registration_Success.html";
+                            },
+                            error: function(res) {
+                                $('#errMsg').html("This user already exists").css("color", "red");
+                            }
+                        });
+                    } else {
+                        $('#errMsg').html("Passwords do not match. Password needs to be 8 characters or higher").css("color", "red");
+                    }
+                
+            })
 		});
 		
 
