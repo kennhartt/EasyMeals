@@ -3,7 +3,7 @@ const authentication = require('../authentication');
 const maxNumberOfResults = 3;
 const request = require("request");
 
-// Controller for out API queries
+// Query controller to connect to our external API
 
 /**
  * @param naturalString
@@ -61,6 +61,12 @@ module.exports.queryByIngredient = async (req, res, next) => {
     }
 }
 
+/**
+ * @param recipeId
+ * Pass the id of the recipe in the body of the api call as recipeId
+ * 
+ * Calls the external api using the recipe id to return a detailed recipe
+ */
 module.exports.getRecipeById = async (req, res, next) => {
     try {
         let recipeId = req.body.recipeId;
@@ -81,6 +87,13 @@ module.exports.getRecipeById = async (req, res, next) => {
     }
 }
 
+
+/**
+ * @param username
+ * Pass the user email as username in the body of the api call
+ * 
+ * Returns the users saved recipes
+ */
 module.exports.getUserRecipes = async (req, res, next) => {
     if (!authentication.authenticate(req, res))
         return;
@@ -89,9 +102,8 @@ module.exports.getUserRecipes = async (req, res, next) => {
 
         let userRecipes = await req.app.db.collection('Users').findOne(
             {username: username});
-        console.log(userRecipes);
+
         userRecipes = userRecipes.recipeList.join();
-        console.log(userRecipes);
 
         let options = {
             url: `https://api.spoonacular.com/recipes/informationBulk?ids=${userRecipes}&apiKey=${spoonacularAPIKey}`

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 
+//Authentication function for keeping user sessions
 module.exports.authenticate = (req,res) => {
     const token = req.headers['x-access-token'];
     const authFailed = false;

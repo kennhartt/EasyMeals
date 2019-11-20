@@ -85,6 +85,17 @@ module.exports.createUser = async(req, res, next) => {
     }
 }
 
+/**
+ * @param newPassword
+ * Pass desired password in the body as new password in the api call
+ * @param enteredCurrentPassword
+ * Pass current password entered by as user in the body of the api call
+ * @param req.body.username
+ * Pass user email in the body of the api call as username
+ * 
+ * Checks if hashed enteredCurrentPassword matches users current password, 
+ * if so hash the newPassword and change the old password to the new one
+ */
 module.exports.changePassword = async(req, res, next) => {
     if (!authentication.authenticate(req, res))
         return;
@@ -123,16 +134,31 @@ module.exports.changePassword = async(req, res, next) => {
     }
 }
 
+/**
+ * @param username
+ * Pass the user email as username in the body of the api call
+ * @param recipeId
+ * Pass the id of the recipe to add in the body of the api call as recipeId
+ * 
+ * Adds the recipeId to the favorites list of the user
+ */
 module.exports.addRecipe = async (req, res, next) => {
     if (!authentication.authenticate(req, res))
         return;
 
     try{
-        let response = await req.app.db.collection('Users').updateOne(
-            {username: req.body.username},
-            {$push: {recipeList: req.body.recipeId}});
+        let username = req.body.username;
+        let recipeId = req.body.recipeId;
 
-        res.send("Recipe added to favorites");
+        let response = await req.app.db.collection('Users').updateOne(
+            {username},
+            {$push: {recipeList: recipeId}});
+
+        if(response) {
+            res.send("Recipe added to favorites");
+        } else {
+            res.send(new Error("There was a problem with the request"));
+        }
     } catch {
         return next(err);
     }
