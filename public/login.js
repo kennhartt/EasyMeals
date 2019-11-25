@@ -5,9 +5,11 @@ function processLogin(username,password){
 		contentType: 'application/json',
 		data: JSON.stringify({username,password}),
 		success: function(res){
-			console.log(res);
 			localStorage.setItem("userInfo",JSON.stringify(res));
 			window.location.href = "index.html";
+		},
+		error: function(res) {
+			alert(res.responseText);
 		}
 		
 	})	
