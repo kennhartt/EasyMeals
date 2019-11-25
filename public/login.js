@@ -1,6 +1,6 @@
 function processLogin(username,password){
 	$.ajax({
-		url: 'http://localhost:8000/api/user/login',
+		url: '/api/user/login',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({username,password}),
