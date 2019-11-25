@@ -7,7 +7,7 @@ function processLogin(username,password){
 		success: function(res){
 			console.log(res);
 			localStorage.setItem("userInfo",JSON.stringify(res));
-			window.location.href = "Registration_success.html";
+			window.location.href = "index.html";
 		}
 		
 	})	
