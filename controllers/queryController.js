@@ -1,6 +1,6 @@
 const spoonacularAPIKey = "b05207a1e079405c9d7bdafbc8f62047";
 const authentication = require('../authentication');
-const maxNumberOfResults = 3;
+const maxNumberOfResults = 9;
 const request = require("request");
 
 // Query controller to connect to our external API
