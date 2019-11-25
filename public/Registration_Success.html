@@ -1,30 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Registration Success</title>
 
-    <title>Registration</title>
-    
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="login.js"></script>
+  <script src="userStatus.js"></script>
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
       }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
+<<<<<<< HEAD
     </style>
     <link href="./CSS/form-validation.css" rel="stylesheet">
   </head>
@@ -60,25 +63,206 @@
     <div class="col-md-8 order-md-1" style="margin: auto">      
                 
         <button class="btn btn-primary btn-lg btn-info" >Return to Home Page</button>
+=======
+    }
+
+    .sidenav {
+      height: 120%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      background-color: #ffffff;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 80px;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 30px;
+      margin-left: 50px;
+      padding-top: 60px;
+    }
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="jumbotron.css" rel="stylesheet">
+</head>
+<!-- Body Start -->
+
+<body class="text-center">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand ml-3" href="index.html">&#10086; EasyMeals</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav ml-auto mr-3 w-100 justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li id="accountItem" class="nav-item">
+          <a class="nav-link" href="Account.html">Account</a>
+        </li>
+        <li id="savedRecipes" class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">Saved Recipes</a>
+        </li>
+        <li id="signInItem" class="nav-item" style="padding-right: 20px">
+          <a class="nav-link" onclick="openNavLog()">Sign in</a>
+        </li>
+        <li id="signUpItem" class="nav-item active">
+          <a class="nav-link btn-primary rounded" href="SignUp.html" role="button"
+            style="width: 150px;text-align: center;">Sign up &#9753;</a>
+        </li>
+        <li id="logOutItem" class="nav-item">
+          <a class="nav-link" href="index.html">Log out</a>
+        </li>
+      </ul>
+
     </div>
+  </nav>
+
+  <div class="container text-center" style="margin-top: 200px;">
+    <div class="py-5 text-center">
+      <h1 class="h1">&#10086; EasyMeals</h1>
+      <br/><br/>
+      <h3>&#10004; Your Registration is Successful</h3>
+      <p>Your account is now ready. You can now sign in with your password. </p>
+>>>>>>> eae18c693d1ae9a64b7b2d4327173620e578fa4f
+    </div>
+    <form action="./Index.html">
+      <div class="col-md-8 order-md-1" style="margin: auto">
+
+        <button class="btn btn-primary btn-lg btn-info">Return to Sign In</button>
+      </div>
     </form>
   </div>
-  
+
 
   <footer class="my-5 pt-5 text-muted text-center text-small" style="padding-bottom: 20px;">
     <p class="mb-1">© 2019 EasyMeals</p>
     <ul class="list-inline">
-      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.3/examples/checkout/#">Privacy</a></li>
-      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.3/examples/checkout/#">Terms</a></li>
-      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.3/examples/checkout/#">Support</a></li>
+      <li class="list-inline-item"><a href="">Privacy</a></li>
+      <li class="list-inline-item"><a href="">Terms</a></li>
+      <li class="list-inline-item"><a href="">Support</a></li>
     </ul>
   </footer>
 
-	<script src="./CSS/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="./CSS/bootstrap.bundle.min.js.download" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-    <script src="./CSS/form-validation.js.download"></script>
 
+  <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="./CSS/bootstrap.bundle.min.js.download"
+    integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+    crossorigin="anonymous"></script>
+  <script>
+    function openNavLog() {
+      document.getElementById("mySidenavLogin").style.width = "500px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidenavLogin").style.width = "0px";
+    }
+
+    $(function () {
+      var status = getUserStatus();
+      if (status == 'true') {
+        $("#signInItem").hide();
+        $("#signUpItem").hide();
+        $("#accountItem").show();
+        $("#logOutItem").show();
+      } else {
+        $("#signInItem").show();
+        $("#signUpItem").show();
+        $("#accountItem").hide();
+        $("#logOutItem").hide();
+      }
+      // ajax function
+      function queryByIngredient(naturalString) {
+        //clear div tag everytime user search for a recipe
+        clearDisplay();
+        var display = document.getElementById("results");
+        var titleCard = document.getElementById("titleCard");
+        var count = 1;
+        //ajax call to server
+        $.ajax({
+          url: 'http://localhost:8000/api/query/byNatural',
+          type: 'POST',
+          contentType: 'application/json',
+          // parse data, send required parameters in JSON format
+          data: JSON.stringify({ naturalString }),
+          success: function (res) {
+            var text = "<div class='row'>"; //content data
+            //loop through returned data and assign it to text
+            for (var i = 0; i < res.results.length; i++) {
+              var title = res.results[i].title;
+              if (title.length > 25) {
+                title = title.substring(0, 25) + "...";
+              }
+              //close the div tag to produce 3x3 table result
+              if (i % 3 == 0) {
+                text += "</div>";
+                if (i != res.results.length - 1) {
+                  text += "<div class='row'>";
+                }
+              }
+              text += "<div class='col-md-4 rounded'><h1 class='h5'>" + title + "</h1><p><img class='rounded' src='https://spoonacular.com/recipeImages/" + res.results[i].id + "-556x370.jpg' style='height: 250px'/></p><p><button name='viewRecipe' class='btn btn-secondary' role='button' value=" + res.results[i].id + ">View details &raquo;</button></p></div>"
+            }
+            //display data
+            titleCard.innerHTML = "Recipes";
+            display.innerHTML += text;
+            $("button[name='viewRecipe']").click(function () {
+              window.location.href = "RecipeDetails.html" + "#" + $(this).val();
+            })
+          }
+        })
+      }
+      //clear display tags
+      function clearDisplay() {
+        var display = document.getElementById("results");
+        var titleCard = document.getElementById("titleCard");
+        display.innerHTML = "";
+        titleCard.innerHTML = "";
+      }
+
+      var searchBtn = document.getElementById("searchBtn");
+      $("#searchBtn").click(function () {
+        queryByIngredient($("#searchData").val());
+      })
+
+      $("#logOutItem").click(function () {
+        processLogOut();
+      })
+
+      searchBtn.addEventListener("click", queryByIngredient("pizza"), false);
+
+      $("#savedRecipes").click(function () {
+        if (getUserStatus() == "true") {
+          window.location.href = "SavedRecipes.html";
+        } else {
+          window.location.href = "SignUp.html";
+        }
+      })
+    });
+
+
+  </script>
 </body>
 
 </html>
