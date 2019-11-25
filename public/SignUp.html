@@ -239,7 +239,7 @@
 				var titleCard = document.getElementById("titleCard");
 				var count = 1;
 				$.ajax({
-					url: 'http://localhost:8000/api/query/byNatural',
+					url: '/api/query/byNatural',
 					type: 'POST',
 					contentType: 'application/json',
 					data: JSON.stringify({naturalString}),
@@ -305,7 +305,7 @@
 
 
                         $.ajax({
-                            url: 'http://localhost:8000/api/user/createUser/',
+                            url: '/api/user/createUser/',
                             type: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify({

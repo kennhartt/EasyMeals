@@ -224,7 +224,7 @@
 			function getData(recipeResult){
 				
 				$.ajax({
-						url: 'http://localhost:8000/api/query/getRecipeById',
+						url: '/api/query/getRecipeById',
 						type: 'POST',
 						contentType: 'application/json',
 						data: JSON.stringify({"recipeId":recipeResult}),
@@ -245,7 +245,7 @@
 					userInfo = JSON.parse(userInfo);
 					if(localStorage.getItem("saved") == "true") {
 											$.ajax({
-						url: 'http://localhost:8000/api/user/removeRecipe',
+						url: '/api/user/removeRecipe',
 						type: 'POST',
 						contentType: 'application/json',
 						data: JSON.stringify({"username": userInfo.user, "recipeId": recipeResult}),
@@ -256,7 +256,7 @@
 					}})
 					} else {
 						$.ajax({
-						url: 'http://localhost:8000/api/user/addRecipe',
+						url: '/api/user/addRecipe',
 						type: 'POST',
 						contentType: 'application/json',
 						data: JSON.stringify({"username": userInfo.user, "recipeId": recipeResult}),
@@ -279,7 +279,7 @@
 					userInfo = JSON.parse(userInfo);
 					
 					$.ajax({
-						url: 'http://localhost:8000/api/user/getUserRecipeIds',
+						url: '/api/user/getUserRecipeIds',
 						type: 'POST',
 						contentType: 'application/json',
 						data: JSON.stringify({"username": userInfo.user}),

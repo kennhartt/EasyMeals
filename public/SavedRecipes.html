@@ -204,7 +204,7 @@
 				var username = userInfo.user;
 				var token = userInfo.token;
 				$.ajax({
-					url: 'http://localhost:8000/api/query/getUserRecipes',
+					url: '/api/query/getUserRecipes',
 					type: 'POST',
 					contentType: 'application/json',
 					data: JSON.stringify({username}),

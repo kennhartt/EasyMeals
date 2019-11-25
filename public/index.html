@@ -77,7 +77,7 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav ml-auto mr-3 w-100 justify-content-end">
 					<li class="nav-item active">
-						<a class="nav-link" href="Index.html">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
 					</li>
 					<li id="accountItem" class="nav-item">
 						<a class="nav-link" href="Account.html">Account</a>
@@ -214,7 +214,7 @@
 				var count = 1;
 				//ajax call to server
 				$.ajax({
-					url: 'http://localhost:8000/api/query/byNatural',
+					url: '/api/query/byNatural',
 					type: 'POST',
 					contentType: 'application/json',
 					// parse data, send required parameters in JSON format
