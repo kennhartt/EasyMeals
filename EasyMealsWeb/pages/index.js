@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const Index = (props) => <h1>Hello</h1>;
+const Index = (props) => <h1>{props.recipe.summary}</h1>;
 
 Index.getInitialProps = async function () {
   let body = JSON.stringify({ recipeId: "485365" });
@@ -12,10 +12,8 @@ Index.getInitialProps = async function () {
 
   const data = await res.json();
 
-  console.log(data);
-
   return {
-    data,
+    recipe: data,
   };
 };
 
