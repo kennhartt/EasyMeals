@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -104,9 +104,9 @@ module.exports =
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1__);
-var _jsxFileName = "E:\\Douglas\\Software Engineering\\EasyMeals\\EasyMeals\\EasyMealsWeb\\pages\\index.js";
+/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! node-fetch */ "node-fetch");
+/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(node_fetch__WEBPACK_IMPORTED_MODULE_1__);
+var _jsxFileName = "D:\\ReactProjects\\EasyMeals-master\\EasyMealsWeb\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -115,20 +115,21 @@ const Index = props => __jsx("h1", {
   __self: undefined,
   __source: {
     fileName: _jsxFileName,
-    lineNumber: 4,
-    columnNumber: 5
+    lineNumber: 3,
+    columnNumber: 26
   }
 }, "Hello");
 
 Index.getInitialProps = async function () {
-  const res = await isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_1___default()('http://localhost:8000/api/query/getRecipeById', {
-    method: 'POST',
+  let body = JSON.stringify({
+    recipeId: "485365"
+  });
+  const res = await node_fetch__WEBPACK_IMPORTED_MODULE_1___default()("http://localhost:8000/api/query/getRecipebyId", {
+    method: "post",
+    body: body,
     headers: {
-      'Content-Type': 'application-json'
-    },
-    body: JSON.stringify({
-      'recipeId': '485365'
-    })
+      "Content-Type": "application/json"
+    }
   });
   const data = await res.json();
   console.log(data);
@@ -141,26 +142,26 @@ Index.getInitialProps = async function () {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!******************************!*\
   !*** multi ./pages/index.js ***!
   \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\Douglas\Software Engineering\EasyMeals\EasyMeals\EasyMealsWeb\pages\index.js */"./pages/index.js");
+module.exports = __webpack_require__(/*! D:\ReactProjects\EasyMeals-master\EasyMealsWeb\pages\index.js */"./pages/index.js");
 
 
 /***/ }),
 
-/***/ "isomorphic-unfetch":
-/*!*************************************!*\
-  !*** external "isomorphic-unfetch" ***!
-  \*************************************/
+/***/ "node-fetch":
+/*!*****************************!*\
+  !*** external "node-fetch" ***!
+  \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("isomorphic-unfetch");
+module.exports = require("node-fetch");
 
 /***/ }),
 

@@ -12,22 +12,10 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-/***/ "./node_modules/next/dist/build/polyfills/fetch/index.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/next/dist/build/polyfills/fetch/index.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* globals self */var fetch=self.fetch.bind(self);module.exports=fetch;module.exports.default=module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=E%3A%5CDouglas%5CSoftware%20Engineering%5CEasyMeals%5CEasyMeals%5CEasyMealsWeb%5Cpages%5Cindex.js!./":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=E%3A%5CDouglas%5CSoftware%20Engineering%5CEasyMeals%5CEasyMeals%5CEasyMealsWeb%5Cpages%5Cindex.js ***!
-  \**************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=D%3A%5CReactProjects%5CEasyMeals-master%5CEasyMealsWeb%5Cpages%5Cindex.js!./":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=D%3A%5CReactProjects%5CEasyMeals-master%5CEasyMealsWeb%5Cpages%5Cindex.js ***!
+  \**************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47,14 +35,48 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
+/***/ "./node_modules/node-fetch/browser.js":
+/*!********************************************!*\
+  !*** ./node_modules/node-fetch/browser.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// ref: https://github.com/tc39/proposal-global
+var getGlobal = function () {
+	// the only reliable means to get the global object is
+	// `Function('return this')()`
+	// However, this causes CSP violations in Chrome apps.
+	if (typeof self !== 'undefined') { return self; }
+	if (typeof window !== 'undefined') { return window; }
+	if (typeof global !== 'undefined') { return global; }
+	throw new Error('unable to locate global object');
+}
+
+var global = getGlobal();
+
+module.exports = exports = global.fetch;
+
+// Needed for TypeScript and Webpack.
+exports.default = global.fetch.bind(global);
+
+exports.Headers = global.Headers;
+exports.Request = global.Request;
+exports.Response = global.Response;
+
+/***/ }),
+
 /***/ "./node_modules/react/index.js":
 /*!*******************************************************************************************!*\
-  !*** delegated ./node_modules/react/index.js from dll-reference dll_c2e10d183b950a67d9e7 ***!
+  !*** delegated ./node_modules/react/index.js from dll-reference dll_2adc2403d89adc16ead0 ***!
   \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_c2e10d183b950a67d9e7 */ "dll-reference dll_c2e10d183b950a67d9e7"))("./node_modules/react/index.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_2adc2403d89adc16ead0 */ "dll-reference dll_2adc2403d89adc16ead0"))("./node_modules/react/index.js");
 
 /***/ }),
 
@@ -811,12 +833,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! isomorphic-unfetch */ "./node_modules/next/dist/build/polyfills/fetch/index.js");
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
+/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(node_fetch__WEBPACK_IMPORTED_MODULE_2__);
 
 
 var _this = undefined,
-    _jsxFileName = "E:\\Douglas\\Software Engineering\\EasyMeals\\EasyMeals\\EasyMealsWeb\\pages\\index.js";
+    _jsxFileName = "D:\\ReactProjects\\EasyMeals-master\\EasyMealsWeb\\pages\\index.js";
 
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
@@ -827,42 +849,43 @@ var Index = function Index(props) {
     __self: _this,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 4,
-      columnNumber: 5
+      lineNumber: 3,
+      columnNumber: 26
     }
   }, "Hello");
 };
 
 Index.getInitialProps = function _callee() {
-  var res, data;
+  var body, res, data;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _context.next = 2;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_2___default()('http://localhost:8000/api/query/getRecipeById', {
-            method: 'POST',
+          body = JSON.stringify({
+            recipeId: "485365"
+          });
+          _context.next = 3;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(node_fetch__WEBPACK_IMPORTED_MODULE_2___default()("http://localhost:8000/api/query/getRecipebyId", {
+            method: "post",
+            body: body,
             headers: {
-              'Content-Type': 'application-json'
-            },
-            body: JSON.stringify({
-              'recipeId': '485365'
-            })
+              "Content-Type": "application/json"
+            }
           }));
 
-        case 2:
+        case 3:
           res = _context.sent;
-          _context.next = 5;
+          _context.next = 6;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(res.json());
 
-        case 5:
+        case 6:
           data = _context.sent;
           console.log(data);
           return _context.abrupt("return", {
             data: data
           });
 
-        case 8:
+        case 9:
         case "end":
           return _context.stop();
       }
@@ -874,28 +897,28 @@ Index.getInitialProps = function _callee() {
 
 /***/ }),
 
-/***/ 1:
-/*!******************************************************************************************************************************************************************!*\
-  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=E%3A%5CDouglas%5CSoftware%20Engineering%5CEasyMeals%5CEasyMeals%5CEasyMealsWeb%5Cpages%5Cindex.js ***!
-  \******************************************************************************************************************************************************************/
+/***/ 2:
+/*!******************************************************************************************************************************************!*\
+  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=D%3A%5CReactProjects%5CEasyMeals-master%5CEasyMealsWeb%5Cpages%5Cindex.js ***!
+  \******************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=E%3A%5CDouglas%5CSoftware%20Engineering%5CEasyMeals%5CEasyMeals%5CEasyMealsWeb%5Cpages%5Cindex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=E%3A%5CDouglas%5CSoftware%20Engineering%5CEasyMeals%5CEasyMeals%5CEasyMealsWeb%5Cpages%5Cindex.js!./");
+module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=D%3A%5CReactProjects%5CEasyMeals-master%5CEasyMealsWeb%5Cpages%5Cindex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=D%3A%5CReactProjects%5CEasyMeals-master%5CEasyMealsWeb%5Cpages%5Cindex.js!./");
 
 
 /***/ }),
 
-/***/ "dll-reference dll_c2e10d183b950a67d9e7":
+/***/ "dll-reference dll_2adc2403d89adc16ead0":
 /*!*******************************************!*\
-  !*** external "dll_c2e10d183b950a67d9e7" ***!
+  !*** external "dll_2adc2403d89adc16ead0" ***!
   \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = dll_c2e10d183b950a67d9e7;
+module.exports = dll_2adc2403d89adc16ead0;
 
 /***/ })
 
-},[[1,"static/runtime/webpack.js"]]]);
+},[[2,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map
