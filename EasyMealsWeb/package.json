@@ -1,29 +1,20 @@
 {
-  "name": "easymeals",
+  "name": "EasyMealsWeb",
   "version": "1.0.0",
-  "description": "Software Engineering Project",
-  "main": "server.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RollingOnion/EasyMeals.git"
-  },
-  "author": "Callback Hell",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/RollingOnion/EasyMeals/issues"
-  },
-  "homepage": "https://github.com/RollingOnion/EasyMeals#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.3.4",
-    "nodemon": "^1.19.4",
-    "pug": "^2.0.4",
-    "request": "^2.88.0"
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.3.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
