@@ -69,8 +69,8 @@ module.exports.queryByIngredient = async (req, res, next) => {
  */
 module.exports.getRecipeById = async (req, res, next) => {
   try {
-    let recipeId = req.body.recipeId;
-
+    let recipeId = req.params['recipeId'];
+    console.log(recipeId);
     let options = {
       url: `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${spoonacularAPIKey}`,
     };
@@ -80,7 +80,6 @@ module.exports.getRecipeById = async (req, res, next) => {
         return next(err);
       }
       let bodyJson = JSON.parse(response.body);
-      console.log(bodyJson);
       res.send(bodyJson);
     });
   } catch (err) {

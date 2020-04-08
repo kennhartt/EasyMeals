@@ -1,20 +1,19 @@
 import fetch from "node-fetch";
+import Link from "next/link";
 
-const Index = (props) => <h1>{props.recipe.summary}</h1>;
+const RecipeLink = props => (
+  <li>
+    <Link href='/recipe/[recipeId]' as={`/recipe/${props.recipeId}`}>
+      <a>{props.title}</a>
+    </Link>
+  </li>
+)
 
-Index.getInitialProps = async function () {
-  let body = JSON.stringify({ recipeId: "485365" });
-  const res = await fetch("http://localhost:8000/api/query/getRecipebyId", {
-    method: "post",
-    body: body,
-    headers: { "Content-Type": "application/json" },
-  });
-
-  const data = await res.json();
-
-  return {
-    recipe: data,
-  };
-};
-
-export default Index;
+export default function Index() {
+  return (
+    <ul>
+      <RecipeLink title = 'Breakfast Pizza' recipeId='559251' />
+      <RecipeLink title = 'Egg and rocket pizzas' recipeId='630293' />
+    </ul>
+  );
+}
