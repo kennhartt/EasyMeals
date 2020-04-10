@@ -15,7 +15,7 @@ module.exports.queryByNatural = async (req, res, next) => {
   try {
     let naturalString;
 
-    naturalString = req.body.naturalString;
+    naturalString = req.params['naturalString'];
     let options = {
       url: `https://api.spoonacular.com/recipes/search?apiKey=${spoonacularAPIKey}&query=${naturalString}&number=${maxNumberOfResults}`,
     };
@@ -42,7 +42,7 @@ module.exports.queryByIngredient = async (req, res, next) => {
   try {
     let ingredients;
 
-    ingredients = req.body.ingredients;
+    ingredients = req.params['ingredients'];
     let options = {
       url: `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${spoonacularAPIKey}&ingredients=${ingredients}&number=${maxNumberOfResults}`,
     };
@@ -69,8 +69,10 @@ module.exports.queryByIngredient = async (req, res, next) => {
  */
 module.exports.getRecipeById = async (req, res, next) => {
   try {
-    let recipeId = req.params['recipeId'];
-    console.log(recipeId);
+    let recipeId;
+
+    recipeId = req.params['recipeId'];
+
     let options = {
       url: `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${spoonacularAPIKey}`,
     };
@@ -96,13 +98,15 @@ module.exports.getRecipeById = async (req, res, next) => {
 module.exports.getUserRecipes = async (req, res, next) => {
   if (!authentication.authenticate(req, res)) return;
   try {
-    let username = req.body.username;
+    let username;
+    
+    username = req.params['username'];
 
     let userRecipes = await req.app.db
       .collection("Users")
       .findOne({ username: username });
 
-    userRecipes = userRecipes.recipeList.join();
+    userRecipes = await userRecipes.recipeList.join();
 
     let options = {
       url: `https://api.spoonacular.com/recipes/informationBulk?ids=${userRecipes}&apiKey=${spoonacularAPIKey}`,

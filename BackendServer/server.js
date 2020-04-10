@@ -32,11 +32,10 @@ app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds); /
 app.route('/api/user/removeRecipe').post(userController.removeRecipe) // Remove recipe from saved list
 
 // Recipe Query Controllers
-app.route('/api/query/byNatural').post(queryController.queryByNatural); // Finds recipes by natural text string
-app.route('/api/query/byIngredient').post(queryController.queryByIngredient); // Finds recipes by ingredients
+app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatural); // Finds recipes by natural text string
+app.route('/api/query/byIngredient/:ingredients').get(queryController.queryByIngredient); // Finds recipes by ingredients
 app.route('/api/query/getRecipeById/:recipeId').get(queryController.getRecipeById); // Finds recipe by recipe id
-app.route('/api/query/getUserRecipes').post(queryController.getUserRecipes); // Returns recipes saved by users
-app.route('/api/query/byIngredient').post(queryController.queryByIngredient); // Finds recipes by ingredient
+app.route('/api/query/getUserRecipes/:username').get(queryController.getUserRecipes); // Returns recipes saved by users
 
 app.listen(process.env.PORT || 8000);
 
@@ -45,5 +44,5 @@ app.use(function (err, req, res, next) {
     if (res.headersSent) {
         return next(err)
       }            
-    res.status(500).send(err.message);
+    res.status(err.status || 500).send(err.message);
 })

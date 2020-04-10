@@ -22,7 +22,9 @@ module.exports.userLogin = async (req, res, next) => {
     });
 
     if (!user) {
-        return next(new Error('User not found'));
+        const error = new Error('User not found');
+        error.status = 404;
+        return next(error);
     }
 
     // Check if hashed passwords match
@@ -30,7 +32,9 @@ module.exports.userLogin = async (req, res, next) => {
         hash.update(req.body.password);
 
         if (hash.digest('base64') != user.password) {
-            return next(new Error("Password and username does not match"));
+            const error = new Error("Password and username does not match");
+            erros.status = 401;
+            return next(error);
         } else {
             // if passwords match, 
             let token = jwt.sign({
@@ -65,7 +69,9 @@ module.exports.createUser = async(req, res, next) => {
     }, {password: 0});
 
     if(user) {
-        return next(new Error('This user already exists'));
+        const error = new Error('This user already exists');
+        error.status = 409;
+        return next(error);
     }
  
         // Password hashing
@@ -108,19 +114,27 @@ module.exports.changePassword = async(req, res, next) => {
 
         let user = await req.app.db.collection('Users').findOne({username: req.body.username});
         if(!user) {
-            return next(new Error('This user does not exist'));
+            const error = new Error('This user already exists');
+            error.status = 409;
+            return next(error);
         }
+
         currentPassword = user.password;
         hash.update(enteredCurrentPassword);
+
         if (currentPassword != hash.digest('base64')) {
-            return next(new Error('Password is incorrect'));
+            const error = new Error('Password is incorrect');
+            error.status = 401;
+            return next(error);
         } else {
             newPassword = req.body.newPassword;
             const hashNewPassword = crypto.createHash('sha256');
             hashNewPassword.update(newPassword);
             const digestedNewPassword = hashNewPassword.digest('base64');
             if (currentPassword == digestedNewPassword) {
-                return next(new Error('New password cannot be the same as the old one'));
+                const error = new Error('New password cannot be the same as the old one');
+                error.status = 403
+                return next(error);
             }
 
             let response = await req.app.db.collection('Users').updateOne(
@@ -188,7 +202,9 @@ module.exports.removeRecipe = async (req, res, next) => {
             if(response.result.nModified > 0) {
                 res.send("Recipe removed from favorites");
             } else {
-                return next(new Error("Nothing to remove"));
+                const error = new Error("Nothing to remove");
+                error.status = 404;
+                return next(error);
             }
         } catch {
             return next(err);
@@ -209,7 +225,9 @@ module.exports.getUserRecipeIds = async (req, res, next) => {
         let username = req.body.username;
         let user = await req.app.db.collection('Users').findOne({username});
         if(!user) {
-            return next(new Error('No user found'));
+            const error = new Error('No user found');
+            error.status = 404;
+            return next(error);
         }
         let recipeList = user.recipeList;
 
