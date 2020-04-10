@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import Link from "next/link";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "./components/navbar";
 
 const RecipeLink = (props) => (
   <li>
@@ -12,9 +12,14 @@ const RecipeLink = (props) => (
 
 export default function Index() {
   return (
-    <ul>
-      <RecipeLink title="Breakfast Pizza" recipeId="559251" />
-      <RecipeLink title="Egg and rocket pizzas" recipeId="630293" />
-    </ul>
+    <React.Fragment>
+      <div>
+        <Navbar />
+      </div>
+      <ul>
+        <RecipeLink title="Breakfast Pizza" recipeId="559251" />
+        <RecipeLink title="Egg and rocket pizzas" recipeId="630293" />
+      </ul>
+    </React.Fragment>
   );
 }
