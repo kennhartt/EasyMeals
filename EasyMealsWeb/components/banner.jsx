@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Image from "react-bootstrap/Image";
 
 class Banner extends Component {
   state = {};
@@ -9,7 +8,7 @@ class Banner extends Component {
         class="jumbotron"
         style={{
           marginTop: "30px",
-          backgroundImage: "url(/background.jpeg)",
+          backgroundImage: "url(/images/foodBck2.jpg)",
           backgroundSize: "cover",
         }}
       >
@@ -18,7 +17,7 @@ class Banner extends Component {
             class="display-3"
             style={{
               marginBottom: "20px",
-              color: "#000000",
+              color: "#ffffff",
               fontWeight: "normal",
             }}
           >
