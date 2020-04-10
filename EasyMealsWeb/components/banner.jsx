@@ -9,7 +9,7 @@ class Banner extends Component {
         class="jumbotron"
         style={{
           marginTop: "30px",
-          background: <img src={Image} />,
+          backgroundImage: "url(/background.jpeg)",
           backgroundSize: "cover",
         }}
       >
