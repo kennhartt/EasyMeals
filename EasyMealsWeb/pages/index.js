@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import Link from "next/link";
 import Navbar from "../components/navbar";
+import Banner from "../components/banner";
 
 const RecipeLink = (props) => (
   <li>
@@ -15,11 +16,13 @@ export default function Index() {
     <React.Fragment>
       <div>
         <Navbar />
+        <Banner />
       </div>
-      <ul>
-        <RecipeLink title="Breakfast Pizza" recipeId="559251" />
-        <RecipeLink title="Egg and rocket pizzas" recipeId="630293" />
-      </ul>
     </React.Fragment>
   );
 }
+
+/*<ul>
+<RecipeLink title="Breakfast Pizza" recipeId="559251" />
+<RecipeLink title="Egg and rocket pizzas" recipeId="630293" />
+</ul> */
