@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import Link from "next/link";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const RecipeLink = (props) => (
   <li>
