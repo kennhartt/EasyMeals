@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import Link from "next/link";
-import Navbar from "./components/navbar";
+import Navbar from "../components/navbar";
 
 const RecipeLink = (props) => (
   <li>
