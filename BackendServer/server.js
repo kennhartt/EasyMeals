@@ -5,17 +5,25 @@ const app = express();
 const path = require('path');
 const queryController = require('./controllers/queryController');
 const userController = require('./controllers/userController');
+const recipeController = require('./controllers/recipeController');
+const mongoose = require('mongoose');
 
 // Connects to our mongodb
-const uri = "mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(function(err, client) {
-    if(!err) {
-        app.db = client.db('EasyMeals');
-        console.log('Connected to database');
-    } else {
-        console.log('Problem connecting to database: ' + err);
-    }
+const uri = "mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.net/EasyMeals";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(function(err, client) {
+//     if(!err) {
+//         app.db = client.db('EasyMeals');
+//         console.log('Connected to database');
+//     } else {
+//         console.log('Problem connecting to database: ' + err);
+//     }
+// });
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Connected to db');
 });
 
 // Node configuration
@@ -36,6 +44,10 @@ app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatu
 app.route('/api/query/byIngredient/:ingredients').get(queryController.queryByIngredient); // Finds recipes by ingredients
 app.route('/api/query/getRecipeById/:recipeId').get(queryController.getRecipeById); // Finds recipe by recipe id
 app.route('/api/query/getUserRecipes/:username').get(queryController.getUserRecipes); // Returns recipes saved by users
+
+
+// Recipe Controllers
+app.route('/api/recipe/addRecipe').post(recipeController.addRecipe);
 
 app.listen(process.env.PORT || 8000);
 
