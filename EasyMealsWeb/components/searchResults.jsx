@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
+import withAuthentication from "../hocs/withAuthentication";
+import { signInWithFacebook, signOut, createWithEmail } from "../helpers/authenticationHelper";
 
 const RecipeLink = (props) => (
   <li>
@@ -10,9 +12,10 @@ const RecipeLink = (props) => (
 );
 
 class SearchResults extends Component {
-  state = {};
+  // state = {};
 
   render() {
+    const { user } = this.props
     return (
       <div class="container">
         <div class="row border-bottom">
@@ -29,9 +32,15 @@ class SearchResults extends Component {
           <RecipeLink title="Egg and rocket pizzas" recipeId="630293" />
         </ul>
         <hr />
+        <div>
+        {user ? (
+          <button onClick={signOut}>Logout</button>
+        ) : (
+          <button onClick={signInWithFacebook}>Login</button>
+        )}</div>
       </div>
     );
   }
 }
 
-export default SearchResults;
+export default withAuthentication(SearchResults);
