@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const recipeSchema = new Schema({
     author: {type: String, required: true},
     title: {type: String, required: true},
+    access: {type: String, required: true},
     category: [String],
     diet: [String],
     type: [String],

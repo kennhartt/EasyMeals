@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import withAuthentication from "../hocs/withAuthentication";
-import { signInWithFacebook, signOut, createWithEmail } from "../helpers/authenticationHelper";
+import { signInWithFacebook, signOut, createWithEmail, signInWithGoogle, signInWithEmail, changeEmail } from "../helpers/authenticationHelper";
 
 const RecipeLink = (props) => (
   <li>
@@ -34,9 +34,9 @@ class SearchResults extends Component {
         <hr />
         <div>
         {user ? (
-          <button onClick={signOut}>Logout</button>
+          <button onClick={() => signOut}>{user.email}</button>
         ) : (
-          <button onClick={signInWithFacebook}>Login</button>
+          <button onClick={() => signInWithGoogle}>Login</button>
         )}</div>
       </div>
     );

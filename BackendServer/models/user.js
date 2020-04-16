@@ -4,18 +4,18 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     username: {type: String, required: true},
     email: {type: String, required: true},
-    password: {type: String, required: true},
     dateOfBirth: Date,
     dateCreated: Date,
     lastActivity: Date,
-    name: String,
-    surname: String,
+    fullName: String,
     favoriteRecipes: [Schema.Types.ObjectId],
     favoriteRecipesSpoon: [Number],
     createdRecipes: [{
         recipeId: Schema.Types.ObjectId,
         recipeTitle: String
-    }]
+    }],
+    boughtRecipes: [Schema.Types.ObjectId],
+    accessibleRecipes: [Schema.Types.ObjectId]
 });
 
 const User = mongoose.model('User', userSchema, 'Users');
