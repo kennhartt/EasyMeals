@@ -34,9 +34,9 @@ class SearchResults extends Component {
         <hr />
         <div>
         {user ? (
-          <button onClick={() => signOut}>{user.email}</button>
+          <button onClick={signOut}>{user.email}</button>
         ) : (
-          <button onClick={() => signInWithGoogle}>Login</button>
+          <button onClick={signInWithGoogle}>Login</button>
         )}</div>
       </div>
     );

@@ -6,8 +6,8 @@ export default function Index() {
   return (
     <React.Fragment>
       <div>
-        <Navbar />
-        <Banner />
+        {/* <Navbar />
+        <Banner /> */}
         <SearchResults />
       </div>
     </React.Fragment>

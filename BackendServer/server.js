@@ -7,6 +7,7 @@ const queryController = require('./controllers/queryController');
 const userController = require('./controllers/userController');
 const recipeController = require('./controllers/recipeController');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // Connects to our mongodb
 const uri = "mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.net/EasyMeals";
@@ -31,13 +32,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+//Set CORS
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
 // User Controllers
 app.route('/api/user/createUser').post(userController.createUser); // Create user endpoint
 app.route('/api/user/login').post(userController.userLogin); // User login endpoint 
 app.route('/api/user/changePassword').post(userController.changePassword); // Change password
 app.route('/api/user/addRecipe').post(userController.addRecipe); // Add recipe to user list
 app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds); // Gets users recipe ids
-app.route('/api/user/removeRecipe').post(userController.removeRecipe) // Remove recipe from saved list
+app.route('/api/user/removeRecipe').post(userController.removeRecipe); // Remove recipe from saved list
+app.route('/api/user/userCheck').post(userController.userCheck);
 
 // Recipe Query Controllers
 app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatural); // Finds recipes by natural text string

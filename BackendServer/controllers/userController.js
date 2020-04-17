@@ -3,6 +3,7 @@ const ObjectId = require('mongodb').ObjectId;
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const authentication = require('../authentication');
+const User =require('../models/user');
 // User Controller for user related requests
 
 /** 
@@ -234,5 +235,43 @@ module.exports.getUserRecipeIds = async (req, res, next) => {
         res.send(recipeList);
     } catch (err) {
         return next(err);
+    }
+}
+
+module.exports.userCheck = async (req, res, next) => {
+    try {
+        let uid = req.body.uid
+        if(!uid) {
+            return next(new Error('User uid is required to make this call'));
+        }
+
+        let user = await User.findOne({firebaseUid : uid}).exec();
+        if(!user) {
+            //User with this uid doesnt exist yet, so we create one
+            let newUser = new User({
+                username: req.body.username,
+                email: req.body.email,
+                firebaseUid: uid,
+                dateCreated: new Date(Date.now()).toISOString(),
+                lastActivity: new Date(Date.now()).toISOString(),
+                fullName: '',
+                favoriteRecipes: [],
+                favoriteRecipesSpoon: [],
+                createdRecipes: [],
+                boughtRecipes: [],
+                accessibleRecipes: []
+            });
+            let result = await newUser.save();
+            if(result) {
+                res.status(200).send('User Created');
+            }
+        } else {
+            let result = await user.updateOne({lastActivity : new Date(Date.now()).toISOString()}).exec();
+            if(result) {
+                res.status(200).send('Login Ok');
+            }
+        }
+    } catch (error) {
+        return next(error);
     }
 }

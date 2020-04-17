@@ -1,50 +1,125 @@
 import React, { Component } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import fetch from 'node-fetch'
 
-//Create user with email and pass
-export function createWithEmail(email, password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        return new Error(error);
-      });
+async function mongoUserCheck(user, username) {
+    if(typeof username === undefined) {
+        username = user.displayName;
+    }
+    let body = JSON.stringify({
+        username: username,
+        email: user.email,
+        uid: user.uid
+        });
+    const res = await fetch("http://localhost:8000/api/user/userCheck", {
+      method: "POST",
+      body: body,
+      headers: { "Content-Type": "application/json" },
+    });
+    return res;
 }
 
-export function signInWithEmail(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        return new Error(error);
-      });
+//Create user with email and pass
+export async function createWithEmail(username ,email, password) {
+    try {
+        const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const result = await mongoUserCheck(user.user, username);
+    
+        if(result.status === 200) {
+            return 'OK';
+        } else {
+            signOut();
+            return 'Cancel';
+        }
+    } catch (error) {
+        return error;
+    }
+    // firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
+        
+    // })
+    // .catch(function(error) {
+    //     return new Error(error);
+    //   });
+}
+
+export async function signInWithEmail(email, password) {
+    try {
+        const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+        const result = await mongoUserCheck(user.user);
+    
+        if(result.status === 200) {
+            return 'OK';
+        } else {
+            signOut();
+            return 'Cancel';
+        }
+    } catch (error) {
+        return error;
+    }
 }
 
 export function signOut() {
-    firebase.auth().signOut().then(() => {
-        return 'Sign Out Success';
-      }).catch((error) => {
-        return new Error(error);
-      });
+    firebase.auth().signOut();
 }
 
-export function signInWithGoogle() {
-    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(() => {
-        return 'Signin Success'
-    }).catch((error) => {
-        return new Error(error);
-    })
+export async function signInWithGoogle() {
+    try {
+        const user = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        const result = await mongoUserCheck(user.user);
+    
+        if(result.status === 200) {
+            return 'OK';
+        } else {
+            signOut();
+            return 'Cancel';
+        }
+    } catch (error) {
+        return error;
+    }
+
+    // firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(user => {
+    //     const result = await mongoUserCheck(user);
+    //     if(!result) {
+    //         return signOut();
+    //     } else {
+    //         return 'User sign in successfull';
+    //     }
+    // }).catch((error) => {
+    //     return new Error(error);
+    // })
 }
 
-export function signInWithFacebook() {
-    firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(() => {
-        return 'Signin Success'
-    }).catch((error) => {
-        return new Error(error);
-    })
+export async function signInWithFacebook() {
+    try {
+        const user = await firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
+        const result = await mongoUserCheck(user.user);
+    
+        if(result.status === 200) {
+            return 'OK';
+        } else {
+            signOut();
+            return 'Cancel';
+        }
+    } catch (error) {
+        return error;
+    }
 }
 
-export function signInWithTwitter() {
-    firebase.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider()).then(() => {
-        return 'Signin Success';
-    }).catch((error) => {
-        return new Error(error);
-    })
+export async function signInWithTwitter() {
+    try {
+        const user = await firebase.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider());
+        const result = await mongoUserCheck(user.user);
+    
+        if(result.status === 200) {
+            return 'OK';
+        } else {
+            signOut();
+            return 'Cancel';
+        }
+    } catch (error) {
+        return error;
+    }
 }
 
 export function changeEmail(user, password, newEmail) {
