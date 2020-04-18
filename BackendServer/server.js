@@ -1,16 +1,19 @@
-const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const bodyParser = require('body-parser');
-const app = express();
-const path = require('path');
-const queryController = require('./controllers/queryController');
-const userController = require('./controllers/userController');
-const recipeController = require('./controllers/recipeController');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require('express')
+const MongoClient = require('mongodb').MongoClient
+const bodyParser = require('body-parser')
+const app = express()
+const path = require('path')
+const queryController = require('./controllers/queryController')
+const userController = require('./controllers/userController')
+const recipeController = require('./controllers/recipeController')
+const authentication = require('./authentication')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
+require('dotenv').config()
 
 // Connects to our mongodb
-const uri = "mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.net/EasyMeals";
+const uri = 'mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.net/EasyMeals'
 // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 // client.connect(function(err, client) {
 //     if(!err) {
@@ -20,48 +23,50 @@ const uri = "mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.ne
 //         console.log('Problem connecting to database: ' + err);
 //     }
 // });
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected to db');
-});
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', function () {
+  console.log('Connected to db')
+})
 
 // Node configuration
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
 
-//Set CORS
+// Set CORS
 app.use(cors({
-  origin: 'http://localhost:3000'
-}));
+  origin: 'http://localhost:3000',
+  credentials: true
+}))
 
 // User Controllers
-app.route('/api/user/createUser').post(userController.createUser); // Create user endpoint
-app.route('/api/user/login').post(userController.userLogin); // User login endpoint 
-app.route('/api/user/changePassword').post(userController.changePassword); // Change password
-app.route('/api/user/addRecipe').post(userController.addRecipe); // Add recipe to user list
-app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds); // Gets users recipe ids
-app.route('/api/user/removeRecipe').post(userController.removeRecipe); // Remove recipe from saved list
-app.route('/api/user/userCheck').post(userController.userCheck);
+app.route('/api/user/createUser').post(userController.createUser) // Create user endpoint
+// app.route('/api/user/login').post(userController.userLogin) // User login endpoint
+app.route('/api/user/changePassword').post(userController.changePassword) // Change password
+app.route('/api/user/addRecipe').post(userController.addRecipe) // Add recipe to user list
+app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds) // Gets users recipe ids
+app.route('/api/user/removeRecipe').post(userController.removeRecipe) // Remove recipe from saved list
+app.route('/api/user/userCheck').post(userController.userCheck)
+app.route('/api/user/login').post(authentication.login)
 
 // Recipe Query Controllers
-app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatural); // Finds recipes by natural text string
-app.route('/api/query/byIngredient/:ingredients').get(queryController.queryByIngredient); // Finds recipes by ingredients
-app.route('/api/query/getRecipeById/:recipeId').get(queryController.getRecipeById); // Finds recipe by recipe id
-app.route('/api/query/getUserRecipes/:username').get(queryController.getUserRecipes); // Returns recipes saved by users
-
+app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatural) // Finds recipes by natural text string
+app.route('/api/query/byIngredient/:ingredients').get(queryController.queryByIngredient) // Finds recipes by ingredients
+app.route('/api/query/getRecipeById/:recipeId').get(queryController.getRecipeById) // Finds recipe by recipe id
+app.route('/api/query/getUserRecipes/:username').get(queryController.getUserRecipes) // Returns recipes saved by users
 
 // Recipe Controllers
-app.route('/api/recipe/addRecipe').post(recipeController.addRecipe);
+app.route('/api/recipe/addRecipe').post(recipeController.addRecipe)
 
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 8000)
 
-//ERROR HANDLING
+// ERROR HANDLING
 app.use(function (err, req, res, next) {
-    if (res.headersSent) {
-        return next(err)
-      }            
-    res.status(err.status || 500).send(err.message);
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.status(err.status || 500).send(err.message)
 })

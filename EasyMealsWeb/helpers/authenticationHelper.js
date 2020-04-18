@@ -63,12 +63,38 @@ export function signOut() {
     firebase.auth().signOut();
 }
 
+export async function coke() {
+    try {
+        const res = await fetch("http://localhost:8000/api/user/cookee", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include'
+        });
+
+    console.log(res)
+    } catch (error) {
+    console.log(error)
+    }
+}
+
 export async function signInWithGoogle() {
     try {
-        const user = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        const result = await mongoUserCheck(user.user);
-    
-        if(result.status === 200) {
+        const { user } = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        const idToken = await user.getIdToken();
+        const body = JSON.stringify({
+            username: user.displayName,
+            email: user.email,
+            uid: user.uid,
+            idToken: idToken
+        })
+        const res = await fetch("http://localhost:8000/api/user/login", {
+            method: "POST",
+            body: body,
+            headers: { "Content-Type": "application/json" },
+            credentials: 'include'
+            });
+        console.log(res)
+        if(res.status === 200) {
             return 'OK';
         } else {
             signOut();

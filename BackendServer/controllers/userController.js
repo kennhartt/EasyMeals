@@ -3,7 +3,8 @@ const ObjectId = require('mongodb').ObjectId;
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const authentication = require('../authentication');
-const User =require('../models/user');
+const User = require('../models/user');
+const firebaseAdmin = require('firebase-admin');
 // User Controller for user related requests
 
 /** 

@@ -29,30 +29,31 @@ function withAuthentication (WrappedComponent) {
       if(!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig)
       }
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.setState({ user: user })
           return user
-            .getIdToken()
-            .then(token => {
-              // eslint-disable-next-line no-undef
-              return fetch('/api/login', {
-                method: 'POST',
-                // eslint-disable-next-line no-undef
-                headers: new Headers({ 'Content-Type': 'application/json' }),
-                credentials: 'same-origin',
-                body: JSON.stringify({ token }),
-              })
-            })
+            // .getIdToken()
+            // .then(token => {
+            //   // eslint-disable-next-line no-undef
+            //   return fetch('/api/login', {
+            //     method: 'POST',
+            //     // eslint-disable-next-line no-undef
+            //     headers: new Headers({ 'Content-Type': 'application/json' }),
+            //     credentials: 'same-origin',
+            //     body: JSON.stringify({ token }),
+            //   })
+            // })
           //   .then(res => this.addDbListener())
         } else {
           this.setState({ user: null })
           // eslint-disable-next-line no-undef
-          fetch('/api/logout', {
-            method: 'POST',
-            credentials: 'same-origin',
-          })
+          // fetch('/api/logout', {
+          //   method: 'POST',
+          //   credentials: 'same-origin',
+          // })
         }
       })
     }

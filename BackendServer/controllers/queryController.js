@@ -1,7 +1,7 @@
-const spoonacularAPIKey = "b05207a1e079405c9d7bdafbc8f62047";
-const authentication = require("../authentication");
-const maxNumberOfResults = 9;
-const request = require("request");
+const spoonacularAPIKey = 'b05207a1e079405c9d7bdafbc8f62047'
+const authentication = require('../authentication')
+const maxNumberOfResults = 9
+const request = require('request')
 
 // Query controller to connect to our external API
 
@@ -13,24 +13,22 @@ const request = require("request");
  */
 module.exports.queryByNatural = async (req, res, next) => {
   try {
-    let naturalString;
-
-    naturalString = req.params['naturalString'];
-    let options = {
-      url: `https://api.spoonacular.com/recipes/search?apiKey=${spoonacularAPIKey}&query=${naturalString}&number=${maxNumberOfResults}`,
-    };
+    const naturalString = req.params.naturalString
+    const options = {
+      url: `https://api.spoonacular.com/recipes/search?apiKey=${spoonacularAPIKey}&query=${naturalString}&number=${maxNumberOfResults}`
+    }
 
     request.get(options, async (error, response) => {
       if (error) {
-        return next(error);
+        return next(error)
       }
-      let bodyJson = JSON.parse(response.body);
-      res.send(bodyJson);
-    });
+      const bodyJson = JSON.parse(response.body)
+      res.send(bodyJson)
+    })
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-};
+}
 
 /**
  * @param ingredients
@@ -40,26 +38,24 @@ module.exports.queryByNatural = async (req, res, next) => {
  */
 module.exports.queryByIngredient = async (req, res, next) => {
   try {
-    let ingredients;
-
-    ingredients = req.params['ingredients'];
-    let options = {
-      url: `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${spoonacularAPIKey}&ingredients=${ingredients}&number=${maxNumberOfResults}`,
-    };
+    const ingredients = req.params.ingredients
+    const options = {
+      url: `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${spoonacularAPIKey}&ingredients=${ingredients}&number=${maxNumberOfResults}`
+    }
 
     request.get(options, async (error, response) => {
       if (error) {
-        console.log("hello2");
-        return next(err);
+        console.log('hello2')
+        return next(error)
       }
-      let bodyJson = JSON.parse(response.body);
-      res.send(bodyJson);
-    });
+      const bodyJson = JSON.parse(response.body)
+      res.send(bodyJson)
+    })
   } catch (err) {
-    console.log("hello");
-    return next(err);
+    console.log('hello')
+    return next(err)
   }
-};
+}
 
 /**
  * @param recipeId
@@ -69,25 +65,23 @@ module.exports.queryByIngredient = async (req, res, next) => {
  */
 module.exports.getRecipeById = async (req, res, next) => {
   try {
-    let recipeId;
+    const recipeId = req.params.recipeId
 
-    recipeId = req.params['recipeId'];
-
-    let options = {
-      url: `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${spoonacularAPIKey}`,
-    };
+    const options = {
+      url: `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${spoonacularAPIKey}`
+    }
 
     request.get(options, async (error, response) => {
       if (error) {
-        return next(err);
+        return next(error)
       }
-      let bodyJson = JSON.parse(response.body);
-      res.send(bodyJson);
-    });
+      const bodyJson = JSON.parse(response.body)
+      res.send(bodyJson)
+    })
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-};
+}
 
 /**
  * @param username
@@ -96,30 +90,28 @@ module.exports.getRecipeById = async (req, res, next) => {
  * Returns the users saved recipes
  */
 module.exports.getUserRecipes = async (req, res, next) => {
-  if (!authentication.authenticate(req, res)) return;
+  if (!authentication.authenticate(req, res)) return
   try {
-    let username;
-    
-    username = req.params['username'];
+    const username = req.params.username
 
     let userRecipes = await req.app.db
-      .collection("Users")
-      .findOne({ username: username });
+      .collection('Users')
+      .findOne({ username: username })
 
-    userRecipes = await userRecipes.recipeList.join();
+    userRecipes = await userRecipes.recipeList.join()
 
-    let options = {
-      url: `https://api.spoonacular.com/recipes/informationBulk?ids=${userRecipes}&apiKey=${spoonacularAPIKey}`,
-    };
+    const options = {
+      url: `https://api.spoonacular.com/recipes/informationBulk?ids=${userRecipes}&apiKey=${spoonacularAPIKey}`
+    }
 
     request.get(options, async (error, response) => {
       if (error) {
-        return next(err);
+        return next(error)
       }
-      let bodyJson = JSON.parse(response.body);
-      res.send(bodyJson);
-    });
+      const bodyJson = JSON.parse(response.body)
+      res.send(bodyJson)
+    })
   } catch (err) {
-    return next(err);
+    return next(err)
   }
-};
+}
