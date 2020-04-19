@@ -1,5 +1,6 @@
 const firebaseAdmin = require('firebase-admin')
 const User = require('./models/user')
+const csrf = require('csurf')
 require('dotenv').config()
 // Set session expiration to 5 days.
 const expiresIn = 60 * 60 * 24 * 5 * 1000
@@ -14,12 +15,14 @@ module.exports.login = async (req, res, next) => {
   try {
     const idToken = req.body.idToken
     const uid = req.body.uid
+    console.log(req)
     if (!uid) {
       return next(new Error('User uid is required to make this call'))
     }
     const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn })
     const options = { maxAge: expiresIn, httpOnly: true }
     res.cookie('session', sessionCookie, options)
+    res.cookie('csrf-token', req.csrfToken(), {maxAge: expiresIn})
     const user = await User.findOne({ firebaseUid: uid }).exec()
     if (!user) {
       // User with this uid doesnt exist yet, so we create one
@@ -47,49 +50,32 @@ module.exports.login = async (req, res, next) => {
       }
     }
   } catch (error) {
+    console.log(error)
     return next(error)
   }
 }
 
-module.exports.authenticate = async (req, res) => {
+module.exports.authenticate = async (req) => {
   try {
     const sessionCookie = req.cookies.session || ''
-    const verify = await auth.verifySessionCookie(
-      sessionCookie, true)
+    const verify = await auth.verifySessionCookie(sessionCookie, true)
     if (verify) {
       return true
     }
   } catch (error) {
-    return false
+      return false
   }
 }
 
-// const jwt = require('jsonwebtoken');
-// const config = require('./config');
-
-// //Authentication function for keeping user sessions
-// module.exports.authenticate = (req,res) => {
-//   //Checks if the token is there
-//     const token = req.headers['x-access-token'];
-//     let authFailed = false;
-//     // If token is not there, means user is not logged in
-//     if (!token)
-//     {
-//         res.status(401).send({ auth: false, message: 'No token provided.' });
-//         return false;
-//     }
-
-//     //If token is there, verify it with secret code to see if it is correct
-//     jwt.verify(token, config.secret, function(err, decoded) {
-//         if (err)
-//         {
-//             res.status(401).send({ auth: false, message: 'Failed to authenticate token.' });
-//             authFailed = true;
-//         }
-//       });
-
-//       if(authFailed)
-//         return false;
-//       else
-//         return true;
-// }
+module.exports.logout = async(req, res, next) => {
+  try {
+    const sessionCookie = req.cookies.session || '';
+    console.log(sessionCookie)
+    res.clearCookie('session');
+    const verify = await auth.verifySessionCookie(sessionCookie)
+    _logout = await auth.revokeRefreshTokens(verify.sub)
+    res.status(200).send('Logout OK')
+  } catch (error) {
+    res.status(404).send('Problem with logout')
+  }
+}

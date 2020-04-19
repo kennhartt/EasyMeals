@@ -4,18 +4,16 @@ import 'firebase/auth'
 import 'isomorphic-unfetch'
 import firebaseConfig from '../firebaseConfig'
 
-// export async function getServerSideProps({ req, query }) {
-//   const user = req && req.session ? req.session.decodedToken : null
-//   // don't fetch anything from firebase if the user is not found
-//   // const snap = user && await req.firebaseServer.database().ref('messages').once('value')
-//   // const messages = snap && snap.val()
-//   const messages = null
-//   return {
-//     props: {
-//       user
-//     },
-//   }
-// }
+export async function getServerSideProps({ req, query }) {
+  const user = req && req.session ? req.cookie.session : null
+  // don't fetch anything from firebase if the user is not found
+  return {
+    props: {
+      user
+    },
+  }
+}
+
 function withAuthentication (WrappedComponent) {
   return class extends React.Component {
     constructor(props) {
@@ -29,7 +27,7 @@ function withAuthentication (WrappedComponent) {
       if(!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig)
       }
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+      // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
 
       firebase.auth().onAuthStateChanged(user => {
         if (user) {

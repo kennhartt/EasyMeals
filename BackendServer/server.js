@@ -10,6 +10,7 @@ const authentication = require('./authentication')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const csrf = require('csurf')
 require('dotenv').config()
 
 // Connects to our mongodb
@@ -30,17 +31,22 @@ db.once('open', function () {
   console.log('Connected to db')
 })
 
+// Set CORS
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}))
+
 // Node configuration
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-// Set CORS
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}))
+
+
+const csrfAuth = csrf({ cookie: true, ignoreMethods: ['POST'] })
+const csrfProtection = csrf({ cookie: true })
 
 // User Controllers
 app.route('/api/user/createUser').post(userController.createUser) // Create user endpoint
@@ -50,7 +56,8 @@ app.route('/api/user/addRecipe').post(userController.addRecipe) // Add recipe to
 app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds) // Gets users recipe ids
 app.route('/api/user/removeRecipe').post(userController.removeRecipe) // Remove recipe from saved list
 app.route('/api/user/userCheck').post(userController.userCheck)
-app.route('/api/user/login').post(authentication.login)
+app.route('/api/user/login').post(csrfAuth, authentication.login)
+app.route('/api/user/logout').post(authentication.logout)
 
 // Recipe Query Controllers
 app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatural) // Finds recipes by natural text string

@@ -3,6 +3,22 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import fetch from 'node-fetch'
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
 async function mongoUserCheck(user, username) {
     if(typeof username === undefined) {
         username = user.displayName;
@@ -59,23 +75,22 @@ export async function signInWithEmail(email, password) {
     }
 }
 
-export function signOut() {
-    firebase.auth().signOut();
-}
-
-export async function coke() {
-    try {
-        const res = await fetch("http://localhost:8000/api/user/cookee", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: 'include'
-        });
-
-    console.log(res)
+export async function signOut() {
+    try{
+        const res = await fetch("http://localhost:8000/api/user/logout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: 'include'
+            });
+        if(res.status === 200) {
+            firebase.auth().signOut()
+        }   
     } catch (error) {
-    console.log(error)
+        console.log(error)
     }
+    
 }
+
 
 export async function signInWithGoogle() {
     try {
