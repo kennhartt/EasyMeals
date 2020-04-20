@@ -43,9 +43,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
-
-
-const csrfAuth = csrf({ cookie: true, ignoreMethods: ['POST'] })
 const csrfProtection = csrf({ cookie: true })
 
 // User Controllers
@@ -56,8 +53,9 @@ app.route('/api/user/addRecipe').post(userController.addRecipe) // Add recipe to
 app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds) // Gets users recipe ids
 app.route('/api/user/removeRecipe').post(userController.removeRecipe) // Remove recipe from saved list
 app.route('/api/user/userCheck').post(userController.userCheck)
-app.route('/api/user/login').post(csrfAuth, authentication.login)
-app.route('/api/user/logout').post(authentication.logout)
+app.route('/api/user/login').post(csrfProtection, authentication.login)
+app.route('/api/user/logout').post(csrfProtection, authentication.logout)
+app.route('/api/user/csrfToken').get(csrfProtection, authentication.csrfToken)
 
 // Recipe Query Controllers
 app.route('/api/query/byNatural/:naturalString').get(queryController.queryByNatural) // Finds recipes by natural text string

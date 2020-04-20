@@ -1,4 +1,3 @@
-import React, { Component } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import fetch from 'node-fetch'
@@ -17,59 +16,68 @@ function getCookie(cname) {
       }
     }
     return "";
-  }
-
-async function mongoUserCheck(user, username) {
-    if(typeof username === undefined) {
-        username = user.displayName;
-    }
-    let body = JSON.stringify({
-        username: username,
-        email: user.email,
-        uid: user.uid
-        });
-    const res = await fetch("http://localhost:8000/api/user/userCheck", {
-      method: "POST",
-      body: body,
-      headers: { "Content-Type": "application/json" },
-    });
-    return res;
 }
 
-//Create user with email and pass
-export async function createWithEmail(username ,email, password) {
+//To get csrf cookie, call it before login requests
+export async function getCsrfToken() {
     try {
-        const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const result = await mongoUserCheck(user.user, username);
+        await fetch("http://localhost:8000/api/user/csrfToken",{
+            method: 'GET',
+            credentials: 'include'
+        })
+        return true
+    } catch (error) {
+        return error
+    }
+}
+
+//Login function for after getting user from firebase
+async function login(user, username) {
+    try {
+        if(username === undefined) {
+            username = user.displayName
+        }
+        const idToken = await user.getIdToken();
+        await getCsrfToken();
+        const body = JSON.stringify({
+            username: username,
+            email: user.email,
+            uid: user.uid,
+            idToken: idToken
+            })
+        const res = await fetch("http://localhost:8000/api/user/login", {
+            method: "POST",
+            body: body,
+            headers: { "Content-Type": "application/json", "csrf-token": getCookie("csrf-token") },
+            credentials: 'include'
+            });
     
-        if(result.status === 200) {
+        if(res.status === 200) {
             return 'OK';
         } else {
-            signOut();
-            return 'Cancel';
+            firebase.auth().signOut()
+            return 'Login Failed';
         }
+    } catch (error) {
+        firebase.auth().signOut()
+        return 'Login Failed';
+    }
+}
+
+//Create user with email and pass, need to pass a username email and password from the form
+export async function createWithEmail(username ,email, password) {
+    try {
+        const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        return await login(user, username)
     } catch (error) {
         return error;
     }
-    // firebase.auth().createUserWithEmailAndPassword(email, password).then(user => {
-        
-    // })
-    // .catch(function(error) {
-    //     return new Error(error);
-    //   });
 }
 
 export async function signInWithEmail(email, password) {
     try {
-        const user = await firebase.auth().signInWithEmailAndPassword(email, password);
-        const result = await mongoUserCheck(user.user);
-    
-        if(result.status === 200) {
-            return 'OK';
-        } else {
-            signOut();
-            return 'Cancel';
-        }
+        const { user } = await firebase.auth().signInWithEmailAndPassword(email, password);
+        return await login(user)
     } catch (error) {
         return error;
     }
@@ -79,12 +87,14 @@ export async function signOut() {
     try{
         const res = await fetch("http://localhost:8000/api/user/logout", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "csrf-token": getCookie('csrf-token') },
             credentials: 'include'
-            });
+        });
+        
         if(res.status === 200) {
-            firebase.auth().signOut()
-        }   
+            firebase.auth().signOut();
+        }
+        
     } catch (error) {
         console.log(error)
     }
@@ -95,53 +105,16 @@ export async function signOut() {
 export async function signInWithGoogle() {
     try {
         const { user } = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
-        const idToken = await user.getIdToken();
-        const body = JSON.stringify({
-            username: user.displayName,
-            email: user.email,
-            uid: user.uid,
-            idToken: idToken
-        })
-        const res = await fetch("http://localhost:8000/api/user/login", {
-            method: "POST",
-            body: body,
-            headers: { "Content-Type": "application/json" },
-            credentials: 'include'
-            });
-        console.log(res)
-        if(res.status === 200) {
-            return 'OK';
-        } else {
-            signOut();
-            return 'Cancel';
-        }
+        return await login(user)
     } catch (error) {
         return error;
     }
-
-    // firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(user => {
-    //     const result = await mongoUserCheck(user);
-    //     if(!result) {
-    //         return signOut();
-    //     } else {
-    //         return 'User sign in successfull';
-    //     }
-    // }).catch((error) => {
-    //     return new Error(error);
-    // })
 }
 
 export async function signInWithFacebook() {
     try {
-        const user = await firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
-        const result = await mongoUserCheck(user.user);
-    
-        if(result.status === 200) {
-            return 'OK';
-        } else {
-            signOut();
-            return 'Cancel';
-        }
+        const { user } = await firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider());
+        return await login(user)
     } catch (error) {
         return error;
     }
@@ -149,15 +122,8 @@ export async function signInWithFacebook() {
 
 export async function signInWithTwitter() {
     try {
-        const user = await firebase.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider());
-        const result = await mongoUserCheck(user.user);
-    
-        if(result.status === 200) {
-            return 'OK';
-        } else {
-            signOut();
-            return 'Cancel';
-        }
+        const { user } = await firebase.auth().signInWithPopup(new firebase.auth.TwitterAuthProvider());
+        return await login(user)
     } catch (error) {
         return error;
     }

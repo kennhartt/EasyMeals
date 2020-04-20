@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import withAuthentication from "../hocs/withAuthentication";
-import { signInWithFacebook, signOut, createWithEmail, signInWithGoogle, signInWithEmail, changeEmail, coke } from "../helpers/authenticationHelper";
+import { signInWithFacebook, signOut, createWithEmail, signInWithGoogle, signInWithEmail, changeEmail, getCsrfToken } from "../helpers/authenticationHelper";
 
 const RecipeLink = (props) => (
   <li>
@@ -16,6 +16,7 @@ class SearchResults extends Component {
 
   render() {
     const { user } = this.props
+    
     return (
       <div class="container">
         <div class="row border-bottom">
@@ -36,7 +37,6 @@ class SearchResults extends Component {
         {user ? (
           <div>
           <button onClick={signOut}>{user.displayName}</button>
-        <button onClick={coke}>help</button>
           </div>
         ) : (
           <button onClick={signInWithGoogle}>Login</button>
