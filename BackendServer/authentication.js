@@ -15,7 +15,6 @@ module.exports.login = async (req, res, next) => {
   try {
     const idToken = req.body.idToken
     const uid = req.body.uid
-    console.log(req)
     if (!uid) {
       return next(new Error('User uid is required to make this call'))
     }
@@ -50,8 +49,7 @@ module.exports.login = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.log(error)
-    return next(error)
+      return next(error)
   }
 }
 
