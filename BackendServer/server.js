@@ -14,7 +14,7 @@ const csrf = require('csurf')
 require('dotenv').config()
 
 // Connects to our mongodb
-const uri = 'mongodb+srv://easyMeals:teamcallbackhell@easymeals-9x4fn.mongodb.net/EasyMeals'
+const uri = process.env.MONGODB_URI
 // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 // client.connect(function(err, client) {
 //     if(!err) {
