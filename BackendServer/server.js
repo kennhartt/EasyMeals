@@ -47,7 +47,7 @@ const csrfProtection = csrf({ cookie: true })
 
 // User Controllers
 app.route('/api/user/createUser').post(userController.createUser) // Create user endpoint
-// app.route('/api/user/login').post(userController.userLogin) // User login endpoint
+// app.route('/api/user/login').post(userController.userLogin) // (Deprecated)User login endpoint
 app.route('/api/user/changePassword').post(userController.changePassword) // Change password
 app.route('/api/user/addRecipe').post(userController.addRecipe) // Add recipe to user list
 app.route('/api/user/getUserRecipeIds').post(userController.getUserRecipeIds) // Gets users recipe ids
