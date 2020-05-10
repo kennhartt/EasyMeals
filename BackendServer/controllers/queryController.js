@@ -1,4 +1,4 @@
-const spoonacularAPIKey = 'b05207a1e079405c9d7bdafbc8f62047'
+const spoonacularAPIKey = process.env.SPOONACULAR_API_KEY
 const authentication = require('../authentication')
 const maxNumberOfResults = 9
 const request = require('request')
