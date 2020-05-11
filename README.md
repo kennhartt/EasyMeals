@@ -1,7 +1,7 @@
 # EasyMeals
 EasyMeals started as a class project, Project-Final-HTML branch was the final version for the class. The backend was done by Ozgen (RollingOnion) Tastan and the frontend design was done by https://github.com/kennhartt. We are currently working on converting the same idea with improved functionality to a React with Next.js frontend for web and MongoDB-Express-Node.js stack for our custom backend server.
 
-# OLD VERSION
+# OLD VERSION (easymeals-csis3275.herokuapp.com)
 Our first version simply allowed visitors to search for recipes using natural language. Visitors also had the ability to sign up to our website so they can save their favorite recipes. We have used an external api (https://spoonacular.com/) for our recipe database and search queries. Our frontend used basic HTML with JQuery while our backend used MongoDB-Express-Node.js. Although we were using an external api for the main content in the website, we have still decided to use our own backend to communicate with the external api since we also wanted some user functionality in our website. Users existed in our MongoDB and we have used a custom JWT token for user authorization.
 
 # NEW VERSION
